@@ -3,7 +3,7 @@
     "description": "Workflow module for Platform",
     "type": "package",
     "require": {
-        "humanmade/workflows": "^0.3.1"
+        "humanmade/workflows": "0.3.1"
     },
     "license": "GPL-3.0",
     "authors": [
@@ -11,5 +11,10 @@
             "name": "Human Made Limited",
             "email": "hello@humanmade.com"
         }
-    ]
+    ],
+    "autoload": {
+        "files": [
+            "load.php"
+        ]
+    }
 }
