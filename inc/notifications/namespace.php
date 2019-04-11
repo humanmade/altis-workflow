@@ -98,9 +98,7 @@ function editorial_workflow() {
 			'%comment.text%',
 		)
 		->who( 'assignees' )
-		->who( function ( WP_Comment $comment ) {
-			return get_user_by( 'id', get_post( $comment->comment_post_ID )->post_author );
-		} )
+		->who( 'post_author' )
 		->where( 'email' )
 		->where( 'dashboard' );
 }
