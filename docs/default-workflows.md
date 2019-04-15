@@ -19,7 +19,7 @@ You can disable the default workflows using the following configuration options:
 ```json
 {
 	"extra": {
-		"hm-platform": {
+		"platform": {
 			"modules": {
 				"workflow": {
 					"enabled": true,
