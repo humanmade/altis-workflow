@@ -18,9 +18,9 @@ if ( ! function_exists( 'add_action' ) ) {
 
 add_action( 'hm-platform.modules.init', function () {
 	$default_settings = [
-		'enabled' => false,
-		'posts-workflow' => true,
-		'editorial-workflow' => true,
+		'enabled' => true,
+		'posts-workflow' => false,
+		'editorial-workflow' => false,
 	];
 	register_module( 'workflow', __DIR__, 'Workflow', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );
