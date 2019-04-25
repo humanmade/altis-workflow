@@ -4,23 +4,28 @@ The key to workflows is receiving timely notifications in the places where you w
 
 This component is powered by the [Workflows plugin](https://github.com/humanmade/Workflows). You can find more [detailed documentation on the plugin's wiki](https://github.com/humanmade/Workflows/wiki).
 
-## Basic hardcoded example
+## Hardcoded notifications
 
-The simplest form of a notification looks like the following:
+Notifications can be defined in code to ensure consistency and reduce manual effort when setting up an application's business logic. They will not be visible in the admin UI.
+
+The simplest form of a notification defined in code looks like the following:
 
 ```php
 HM\Workflows\Workflow::register( 'notify_editor_on_new_post' )
-  // The action hook to trigger on.
+  // The WordPress action hook to trigger on.
+  // For post status transitions follow the pattern `<old-status>_to_<new-status>`.
   ->when( 'draft_to_pending' )
   // The message to be sent. Can also be a callback that recieves data from the action hook.
   ->what( 'A new post is ready for review' )
   // The user role to notify. Could also be an array of user IDs.
   ->who( 'editor' )
-  // Use the 'email' destination. Can be used multiple times for multiple destinations.
+  // Use the 'email' destination. This method can be used multiple times for multiple destinations.
   ->where( 'email' );
 ```
 
 The `Workflow` object answers the question "when" should the action happen, "what" should be sent, "who" should receive the message and finally "where" should they receive it.
+
+**Note:** this notification could also be set up manually in the admin.
 
 ## Adding a custom event to the UI
 

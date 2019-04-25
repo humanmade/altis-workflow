@@ -22,7 +22,6 @@ You can disable the default workflows using any of the following configuration o
 		"platform": {
 			"modules": {
 				"workflow": {
-					"enabled": true,
 					"posts-workflow": false,
 					"editorial-workflow": false
 				}
