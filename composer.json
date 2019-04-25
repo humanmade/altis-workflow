@@ -3,6 +3,7 @@
     "description": "Workflow module for Platform",
     "type": "package",
     "require": {
+        "php": ">=7.1",
         "humanmade/workflows": "0.3.2"
     },
     "license": "GPL-3.0",
