@@ -1,6 +1,6 @@
 # Notifications
 
-Key to workflows is receiving timely notifications in the places where you work. This module provides a developer framework for creating notifications, either as hardcoded business logic or by making events, messages, recipients and destinations available to the Workflow builder UI.
+The key to workflows is receiving timely notifications in the places where you work. This module provides a developer framework for creating notifications, either as hardcoded business logic or by making events, messages, recipients and destinations available to the Workflow builder UI.
 
 This component is powered by the [Workflows plugin](https://github.com/humanmade/Workflows). You can find more [detailed documentation on the plugin's wiki](https://github.com/humanmade/Workflows/wiki).
 
@@ -71,17 +71,17 @@ HM\Workflows\Event::register( 'publish_post_event' )
 
 Message actions are very powerful and operate via a webhooks API under the hood. [You can learn more about the possible uses of message actions here](https://github.com/humanmade/Workflows/wiki/Event#add_message_action-string-id-string-text-stringcallable-callback_or_url-arraynull-args--null-array-schema---array-data-----event).
 
-Some other example uses of message actions may be for jumping to editing a post, providing a preview link, publishing a post and anything else you can think of. The links will work from any location whether in the CMS admin, an email or a slack message.
+Some other example uses of message actions may be for "jumping to editing a post", "providing a preview link", "publishing a post" and anything else you can think of. The links will work from any location whether in the CMS admin, an email or a slack message.
 
 ## Adding a custom destination to the UI
 
-Destinations handle dispatching the notifications. Email, dashboard and slack notifications are supported by default.
+Destinations handle dispatching the notifications. Email, dashboard and [Slack](https://slack.com/) notifications are supported by default.
 
 The following example shows the registration of a custom destination handler that posts data to an external API using data entered via the UI.
 
 You can create any number of integrations with external services through this method.
 
-**Note** the destination handler is run as a background task to prevent slowing down the site.
+**Note** the destination handler is run as a background task to prevent slowing down the script execution.
 
 ```php
 HM\Workflows\Destination::register( 'custom-api', function ( array $recipients, array $message, array $ui_data = [] ) {
