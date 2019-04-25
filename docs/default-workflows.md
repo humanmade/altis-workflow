@@ -14,7 +14,7 @@ This module provides some default workflows that you can toggle on or off via th
 
 ## Configuring default workflows
 
-You can disable the default workflows using the following configuration options:
+You can disable the default workflows using any of the following configuration options:
 
 ```json
 {

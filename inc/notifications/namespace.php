@@ -27,7 +27,7 @@ function setup() {
 }
 
 /**
- * Add a default postson publishing workflow.
+ * Add a default posts on publishing workflow.
  */
 function posts_workflow() {
 	// When a post is submitted for review.
