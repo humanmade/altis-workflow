@@ -1,0 +1,17 @@
+# Workflow
+
+Workflows provides teams with the flexibility to automate common tasks, enforcing quality standards and communicating more effectively by integrating notifications and actions with existing tools.
+
+## Notifications
+
+Notifications fill in the gaps between events happening and informing those who need to take any subsequent actions. [Find out more about how to create custom notifications and integrations](notifications.md).
+
+## Editorial comments
+
+[Editorial comments](editorial-comments.md) allow content creators to discuss and track the progress of their work as well as assign a piece of content to someone else.
+
+## Default workflows
+
+Some common workflow scenarios including a publishing approval workflow are provided by default but you can disable them as necessary if your needs are more complex.
+
+[You can find mor details about the default workflows here](default-workflows.md).
