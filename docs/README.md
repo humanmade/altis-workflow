@@ -14,4 +14,4 @@ Notifications fill in the gaps between events happening and informing those who 
 
 Some common workflow scenarios including a publishing approval workflow are provided by default but you can disable them as necessary if your needs are more complex.
 
-[You can find mor details about the default workflows here](default-workflows.md).
+[You can find more details about the default workflows here](default-workflows.md).
