@@ -1,6 +1,6 @@
 {
     "name": "humanmade/workflow",
-    "description": "Workflow module for Platform",
+    "description": "Workflow module for Altis",
     "type": "package",
     "require": {
         "php": ">=7.1",

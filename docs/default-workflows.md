@@ -19,7 +19,7 @@ You can disable the default workflows using any of the following configuration o
 ```json
 {
 	"extra": {
-		"platform": {
+		"altis": {
 			"modules": {
 				"workflow": {
 					"posts-workflow": false,
