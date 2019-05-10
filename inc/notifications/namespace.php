@@ -2,12 +2,12 @@
 /**
  * Default Notications for Workflow Module.
  *
- * @package hm-platform/workflow
+ * @package altis/workflow
  */
 
-namespace HM\Platform\Workflow\Notifications;
+namespace Altis\Workflow\Notifications;
 
-use function HM\Platform\get_config;
+use function Altis\get_config;
 use HM\Workflows\Workflow;
 use WP_Comment;
 
@@ -33,7 +33,7 @@ function posts_workflow() {
 	// When a post is submitted for review.
 	Workflow::register( 'post_submitted_for_review' )
 		->when( 'draft_to_pending' )
-		->what( __( 'Ready for review: "%title%" by %author%', 'hm-platform' ) )
+		->what( __( 'Ready for review: "%title%" by %author%', 'altis' ) )
 		->who( [ 'assignee', 'editor' ] )
 		->where( 'email' )
 		->where( 'dashboard' );
@@ -41,7 +41,7 @@ function posts_workflow() {
 	// When a post is published.
 	Workflow::register( 'post_published' )
 		->when( 'publish_post' )
-		->what( __( 'Post published: %title%', 'hm-platform' ) )
+		->what( __( 'Post published: %title%', 'altis' ) )
 		->who( [ 'post_author', 'assignee' ] )
 		->where( 'email' )
 		->where( 'dashboard' );
@@ -69,10 +69,10 @@ function editorial_workflow() {
 			'accepted_args' => 3,
 		] )
 		->what( function ( $post_id ) {
-				return sprintf( __( '"%s" has been assigned to you', 'hm-platform' ), get_the_title( $post_id ) );
+				return sprintf( __( '"%s" has been assigned to you', 'altis' ), get_the_title( $post_id ) );
 		}, '', [
 			'edit' => [
-				'text' => __( 'Edit post', 'hm-platform' ),
+				'text' => __( 'Edit post', 'altis' ),
 				'callback_or_url' => function ( $post_id ) {
 					return get_edit_post_link( $post_id, 'raw' );
 				},
@@ -94,7 +94,7 @@ function editorial_workflow() {
 	Workflow::register( 'editorial_comment_added' )
 		->when( 'new_editorial_comment' )
 		->what(
-			__( 'New comment on: %post.title% from %comment.author%', 'hm-platform' ),
+			__( 'New comment on: %post.title% from %comment.author%', 'altis' ),
 			'%comment.text%',
 		)
 		->who( 'assignees' )

@@ -1,2 +1,2 @@
-# platform-workflow
-Workflow module for platform
+# Workflow
+Workflow module for Altis

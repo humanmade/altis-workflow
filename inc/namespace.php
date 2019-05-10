@@ -2,12 +2,12 @@
 /**
  * Workflow Module functions.
  *
- * @package hm-platform/workflow
+ * @package altis/workflow
  */
 
-namespace HM\Platform\Workflow;
+namespace Altis\Workflow;
 
-use const HM\Platform\ROOT_DIR;
+use const Altis\ROOT_DIR;
 
 function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_workflows', 0 );
