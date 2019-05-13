@@ -1,5 +1,5 @@
 {
-    "name": "humanmade/workflow",
+    "name": "altis/workflow",
     "description": "Workflow module for Altis",
     "type": "package",
     "require": {
