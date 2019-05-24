@@ -9,7 +9,6 @@ namespace Altis\Workflow\Notifications;
 
 use function Altis\get_config;
 use HM\Workflows\Workflow;
-use WP_Comment;
 
 /**
  * Interpret configuration and set up hooks.
@@ -68,22 +67,27 @@ function editorial_workflow() {
 			},
 			'accepted_args' => 3,
 		] )
-		->what( function ( $post_id ) {
+		->what(
+			function ( $post_id ) {
+				// translators: %s = a post title.
 				return sprintf( __( '"%s" has been assigned to you', 'altis' ), get_the_title( $post_id ) );
-		}, '', [
-			'edit' => [
-				'text' => __( 'Edit post', 'altis' ),
-				'callback_or_url' => function ( $post_id ) {
-					return get_edit_post_link( $post_id, 'raw' );
-				},
-				'args' => function ( $post_id ) {
-					return [ 'post_id' => $post_id ];
-				},
-				'schema' => [
-					'post_id' => 'intval',
+			},
+			'',
+			[
+				'edit' => [
+					'text' => __( 'Edit post', 'altis' ),
+					'callback_or_url' => function ( $post_id ) {
+						return get_edit_post_link( $post_id, 'raw' );
+					},
+					'args' => function ( $post_id ) {
+						return [ 'post_id' => $post_id ];
+					},
+					'schema' => [
+						'post_id' => 'intval',
+					],
 				],
-			],
-		] )
+			]
+		)
 		->who( function ( $post_id, $assignee ) {
 			return get_user_by( 'id', $assignee );
 		} )
@@ -94,6 +98,7 @@ function editorial_workflow() {
 	Workflow::register( 'editorial_comment_added' )
 		->when( 'new_editorial_comment' )
 		->what(
+			// translators: %post.title% = a post title, %comment.author% = comment author's name
 			__( 'New comment on: %post.title% from %comment.author%', 'altis' ),
 			'%comment.text%',
 		)

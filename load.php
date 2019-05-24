@@ -5,7 +5,7 @@
  * @package altis/workflow
  */
 
-namespace Altis\Workflow;
+namespace Altis\Workflow; // @codingStandardsIgnoreLine
 
 use function Altis\register_module;
 
