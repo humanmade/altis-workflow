@@ -4,7 +4,7 @@
     "type": "package",
     "require": {
         "php": ">=7.1",
-        "humanmade/workflows": "0.3.3"
+        "humanmade/workflows": "~0.3.4"
     },
     "license": "GPL-3.0",
     "authors": [
