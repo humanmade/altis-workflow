@@ -21,6 +21,11 @@ add_action( 'altis.modules.init', function () {
 		'enabled' => true,
 		'posts-workflow' => false,
 		'editorial-workflow' => false,
+		'publication-checklist' => [
+			'enabled' => true,
+			'block_on_failing' => false,
+			'hide_column' => false,
+		],
 	];
 	register_module( 'workflow', __DIR__, 'Workflow', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );
