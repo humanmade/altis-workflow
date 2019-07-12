@@ -32,10 +32,10 @@ function load_publication_checklist() {
 		$config = [];
 	}
 
-	if ( $config['block_publish'] ?? false ) {
+	if ( $config['block-on-failing'] ?? false ) {
 		add_filter( 'altis.publication-checklist.block_on_failing', '__return_true' );
 	}
-	if ( $config['hide_column'] ?? false ) {
+	if ( $config['hide-column'] ?? false ) {
 		add_filter( 'altis.publication-checklist.show_tasks_column', '__return_false' );
 	}
 

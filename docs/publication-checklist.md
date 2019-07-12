@@ -131,7 +131,7 @@ To enable advanced functionality, you may want to wrap this component in [select
 
 By default, Publication Checklist will display a warning if some items are incomplete, with a prompt to allow publishing anyway.
 
-To enforce these checks and block publication, set the `modules.workflow.publication-checklist.block_on_failing` option to `true`:
+To enforce these checks and block publication, set the `modules.workflow.publication-checklist.block-on-failing` option to `true`:
 
 ```json
 {
@@ -141,7 +141,7 @@ To enforce these checks and block publication, set the `modules.workflow.publica
 				"workflow": {
 					"publication-checklist": {
 						"enabled": true,
-						"block_on_failing": true
+						"block-on-failing": true
 					}
 				}
 			}
@@ -157,7 +157,7 @@ This will change the UI to disable the publish button, display a user-facing mes
 
 Publication Checklist will add a Tasks column to the Posts list screen showing the status of each post. This column is only shown if statuses have been registered.
 
-To hide this column, set the `modules.workflow.publication-checklist.hide_column` option to `true`:
+To hide this column, set the `modules.workflow.publication-checklist.hide-column` option to `true`:
 
 ```json
 {
@@ -167,7 +167,7 @@ To hide this column, set the `modules.workflow.publication-checklist.hide_column
 				"workflow": {
 					"publication-checklist": {
 						"enabled": true,
-						"block_on_failing": true
+						"hide-column": true
 					}
 				}
 			}
