@@ -1,5 +1,7 @@
 # Workflow
 
+![](./assets/banner-workflow.png)
+
 Workflows provides teams with the flexibility to automate common tasks, enforcing quality standards and communicating more effectively by integrating notifications and actions with existing tools.
 
 ## Notifications
