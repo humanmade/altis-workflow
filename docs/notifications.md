@@ -15,7 +15,7 @@ HM\Workflows\Workflow::register( 'notify_editor_on_new_post' )
   // The WordPress action hook to trigger on.
   // For post status transitions follow the pattern `<old-status>_to_<new-status>`.
   ->when( 'draft_to_pending' )
-  // The message to be sent. Can also be a callback that recieves data from the action hook.
+  // The message to be sent. Can also be a callback that receives data from the action hook.
   ->what( 'A new post is ready for review' )
   // The user role to notify. Could also be an array of user IDs.
   ->who( 'editor' )
