@@ -100,7 +100,7 @@ function editorial_workflow() {
 		->what(
 			// translators: %post.title% = a post title, %comment.author% = comment author's name
 			__( 'New comment on: %post.title% from %comment.author%', 'altis' ),
-			'%comment.text%',
+			'%comment.text%'
 		)
 		->who( 'assignees' )
 		->who( 'post_author' )
