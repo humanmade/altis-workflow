@@ -95,7 +95,7 @@ function editorial_workflow() {
 		->when( 'new_editorial_comment' )
 		->what(
 			__( 'New comment on: %post.title% from %comment.author%', 'altis' ),
-			'%comment.text%',
+			'%comment.text%'
 		)
 		->who( 'assignees' )
 		->who( 'post_author' )
