@@ -5,9 +5,9 @@
  * @package altis/workflow
  */
 
-namespace Altis\Workflow; // @codingStandardsIgnoreLine
+namespace Altis\Workflow; // phpcs:ignore
 
-use function Altis\register_module;
+use Altis;
 
 add_action( 'altis.modules.init', function () {
 	$default_settings = [
@@ -20,5 +20,5 @@ add_action( 'altis.modules.init', function () {
 			'hide-column' => false,
 		],
 	];
-	register_module( 'workflow', __DIR__, 'Workflow', $default_settings, __NAMESPACE__ . '\\bootstrap' );
+	Altis\register_module( 'workflow', __DIR__, 'Workflow', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );

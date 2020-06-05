@@ -7,14 +7,14 @@
 
 namespace Altis\Workflow\Notifications;
 
-use function Altis\get_config;
+use Altis;
 use HM\Workflows\Workflow;
 
 /**
  * Interpret configuration and set up hooks.
  */
 function setup() {
-	$config = get_config()['modules']['workflow'];
+	$config = Altis\get_config()['modules']['workflow'];
 
 	if ( $config['posts-workflow'] ?? false ) {
 		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\posts_workflow' );
@@ -98,7 +98,7 @@ function editorial_workflow() {
 	Workflow::register( 'editorial_comment_added' )
 		->when( 'new_editorial_comment' )
 		->what(
-			// translators: %post.title% = a post title, %comment.author% = comment author's name
+			// translators: %post.title% = a post title, %comment.author% = comment author's name.
 			__( 'New comment on: %post.title% from %comment.author%', 'altis' ),
 			'%comment.text%'
 		)
