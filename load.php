@@ -5,7 +5,7 @@
  * @package altis/workflow
  */
 
-namespace Altis\Workflow; // phpcs:ignore
+namespace Altis\Workflow;
 
 use Altis;
 
