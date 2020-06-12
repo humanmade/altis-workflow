@@ -12,8 +12,12 @@ use Altis;
 add_action( 'altis.modules.init', function () {
 	$default_settings = [
 		'enabled' => true,
-		'posts-workflow' => false,
-		'editorial-workflow' => false,
+		'notifications' => [
+			'on-post-published' => false,
+			'on-submit-for-review' => false,
+			'on-update-assignees' => false,
+			'on-editorial-comment' => false,
+		],
 		'publication-checklist' => [
 			'enabled' => true,
 			'block-on-failing' => false,
