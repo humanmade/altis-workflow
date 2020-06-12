@@ -16,28 +16,43 @@ use HM\Workflows\Workflow;
 function setup() {
 	$config = Altis\get_config()['modules']['workflow'];
 
-	if ( $config['posts-workflow'] ?? false ) {
-		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\posts_workflow' );
+	if ( ! $config['notifications'] ) {
+		return;
 	}
 
-	if ( $config['editorial-workflow'] ?? false ) {
-		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\editorial_workflow' );
+	if ( $config['notifications']['on-post-published'] ) {
+		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_post_published' );
+	}
+
+	if ( $config['notifications']['on-submit-for-review'] ) {
+		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_submit_for_review' );
+	}
+
+	if ( $config['notifications']['on-update-assignees'] ) {
+		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_update_assignees' );
+	}
+
+	if ( $config['notifications']['on-editorial-comment'] ) {
+		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_editorial_comment' );
 	}
 }
 
 /**
- * Add a default posts on publishing workflow.
+ * Post ready for review notification.
  */
-function posts_workflow() {
-	// When a post is submitted for review.
+function on_submit_for_review() {
 	Workflow::register( 'post_submitted_for_review' )
 		->when( 'draft_to_pending' )
 		->what( __( 'Ready for review: "%title%" by %author%', 'altis' ) )
 		->who( [ 'assignee', 'editor' ] )
 		->where( 'email' )
 		->where( 'dashboard' );
+}
 
-	// When a post is published.
+/**
+ * Post published notification.
+ */
+function on_post_published() {
 	Workflow::register( 'post_published' )
 		->when( 'publish_post' )
 		->what( __( 'Post published: %title%', 'altis' ) )
@@ -47,10 +62,9 @@ function posts_workflow() {
 }
 
 /**
- * Default editorial workflow for comments and assignments.
+ * Assignee update notifications.
  */
-function editorial_workflow() {
-	// When assignees are updated.
+function on_update_assignees() {
 	Workflow::register( 'assignee_updated' )
 		->when( [
 			'action' => 'add_post_meta',
@@ -93,8 +107,12 @@ function editorial_workflow() {
 		} )
 		->where( 'email' )
 		->where( 'dashboard' );
+}
 
-	// When an editorial comment is added.
+/**
+ * Editorial comment notifications.
+ */
+function on_editorial_comment() {
 	Workflow::register( 'editorial_comment_added' )
 		->when( 'new_editorial_comment' )
 		->what(

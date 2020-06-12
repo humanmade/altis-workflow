@@ -25,6 +25,10 @@ function bootstrap() {
  * @return void
  */
 function load_workflows() {
+	$config = Altis\get_config()['modules']['workflow']['notifications'] ?? null;
+	if ( ! $config ) {
+		return;
+	}
 	require_once Altis\ROOT_DIR . '/vendor/humanmade/workflows/plugin.php';
 }
 
