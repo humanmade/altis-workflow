@@ -62,17 +62,17 @@ function load_publication_checklist() {
  */
 function load_query_monitor_debug() {
 
-	if ( ! class_exists(QM_Collectors::class ) ) {
+	if ( ! class_exists( QM_Collectors::class ) ) {
 		return;
 	}
 
-	require_once __DIR__ . '/query-monitor/qm-collector-notifications.class.php';
+	require_once __DIR__ . '/class-qm-collector-notifications.php';
 	QM_Collectors::add( new QM_Collector_Notifications() );
 
 	add_filter(
 		'qm/outputter/html',
 		function( array $output, QM_Collectors $collectors ) {
-			require_once __DIR__ . '/query-monitor/qm-output-notifications.class.php';
+			require_once __DIR__ . '/class-qm-output-notifications.php';
 			if ( $collector = QM_Collectors::get( 'workflow_notifications' ) ) {
 				$output['workflow_notifications'] = new QM_Output_Notifications( $collector );
 			}
