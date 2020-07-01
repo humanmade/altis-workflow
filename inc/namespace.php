@@ -8,6 +8,9 @@
 namespace Altis\Workflow;
 
 use Altis;
+use QM_Collectors;
+use QM_Collector_Notifications;
+use QM_Output_Notifications;
 
 /**
  * Bootstrap Workflow module.
@@ -17,6 +20,7 @@ use Altis;
 function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_workflows', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
+	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_query_monitor_debug' );
 }
 
 /**
@@ -53,4 +57,30 @@ function load_publication_checklist() {
 	}
 
 	require_once Altis\ROOT_DIR . '/vendor/humanmade/publication-checklist/plugin.php';
+}
+
+/**
+ * Load the QM Collector for debugging notifications.
+ */
+function load_query_monitor_debug() {
+
+	if ( ! class_exists(QM_Collectors::class ) ) {
+		return;
+	}
+
+	require_once __DIR__ . '/query-monitor/QM_Collector_Notifications.class.php';
+	QM_Collectors::add( new QM_Collector_Notifications() );
+
+	add_filter(
+		'qm/outputter/html',
+		function( array $output, QM_Collectors $collectors ) {
+			require_once __DIR__ . '/query-monitor/QM_Output_Notifications.class.php';
+			if ( $collector = QM_Collectors::get( 'workflow_notifications' ) ) {
+				$output['workflow_notifications'] = new QM_Output_Notifications( $collector );
+			}
+			return $output;
+		},
+		101,
+		2
+	);
 }
