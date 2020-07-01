@@ -9,8 +9,6 @@ namespace Altis\Workflow;
 
 use Altis;
 use QM_Collectors;
-use QM_Collector_Notifications;
-use QM_Output_Notifications;
 
 /**
  * Bootstrap Workflow module.
@@ -68,13 +66,13 @@ function load_query_monitor_debug() {
 		return;
 	}
 
-	require_once __DIR__ . '/query-monitor/QM_Collector_Notifications.class.php';
+	require_once __DIR__ . '/query-monitor/qm-collector-notifications.class.php';
 	QM_Collectors::add( new QM_Collector_Notifications() );
 
 	add_filter(
 		'qm/outputter/html',
 		function( array $output, QM_Collectors $collectors ) {
-			require_once __DIR__ . '/query-monitor/QM_Output_Notifications.class.php';
+			require_once __DIR__ . '/query-monitor/qm-output-notifications.class.php';
 			if ( $collector = QM_Collectors::get( 'workflow_notifications' ) ) {
 				$output['workflow_notifications'] = new QM_Output_Notifications( $collector );
 			}
