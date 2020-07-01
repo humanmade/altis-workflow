@@ -73,7 +73,8 @@ function load_query_monitor_debug() {
 		'qm/outputter/html',
 		function( array $output, QM_Collectors $collectors ) {
 			require_once __DIR__ . '/class-qm-output-notifications.php';
-			if ( $collector = QM_Collectors::get( 'workflow_notifications' ) ) {
+			$collector = QM_Collectors::get( 'workflow_notifications' );
+			if ( $collector !== null ) {
 				$output['workflow_notifications'] = new QM_Output_Notifications( $collector );
 			}
 			return $output;

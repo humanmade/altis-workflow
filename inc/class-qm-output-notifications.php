@@ -2,8 +2,8 @@
 
 namespace Altis\Workflow;
 
-use QM_Output_Html;
 use QM_Collector;
+use QM_Output_Html;
 
 /**
  * Output class
