@@ -1,6 +1,6 @@
 <?php
 
-namespace Altis\Workflow;
+namespace Altis\Workflow\Notifications;
 
 use QM_Collector;
 use QM_Output_Html;
@@ -36,22 +36,22 @@ class QM_Output_Notifications extends QM_Output_Html {
 				<thead>
 				<tr>
 					<th scope="col">
-						<?php esc_html_e( 'ID', 'query-monitor' ); ?>
+						<?php esc_html_e( 'ID', 'altis' ); ?>
 					</th>
 					<th scope="col">
-						<?php esc_html_e( 'Type', 'query-monitor' ); ?>
+						<?php esc_html_e( 'Type', 'altis' ); ?>
 					</th>
 					<th scope="col">
-						<?php esc_html_e( 'Time', 'query-monitor' ); ?>
+						<?php esc_html_e( 'Time', 'altis' ); ?>
 					</th>
 					<th scope="col">
-						<?php esc_html_e( 'Subject', 'query-monitor' ); ?>
+						<?php esc_html_e( 'Subject', 'altis' ); ?>
 					</th>
 					<th scope="col">
-						<?php esc_html_e( 'Text', 'query-monitor' ); ?>
+						<?php esc_html_e( 'Text', 'altis' ); ?>
 					</th>
 					<th scope="col">
-						<?php esc_html_e( 'Data', 'query-monitor' ); ?>
+						<?php esc_html_e( 'Data', 'altis' ); ?>
 					</th>
 				</tr>
 				</thead>
@@ -62,22 +62,22 @@ class QM_Output_Notifications extends QM_Output_Html {
 						?>
 						<tr>
 							<td class="qm-ltr">
-								<?php echo esc_html( $notification['id'] ); ?>
+								<?php echo esc_html( $notification['id'] ?? '' ); ?>
 							</td>
 							<td class="qm-ltr">
-								<?php echo esc_html( $notification['type'] ); ?>
+								<?php echo esc_html( $notification['type'] ?? '' ); ?>
 							</td>
 							<td class="qm-ltr">
-								<?php echo esc_html( $notification['time'] ); ?>
+								<?php echo esc_html( $notification['time'] ?? '' ); ?>
 							</td>
 							<td class="qm-ltr">
-								<?php echo esc_html( $notification['subject'] ); ?>
+								<?php echo esc_html( $notification['subject'] ?? '' ); ?>
 							</td>
 							<td class="qm-ltr">
-								<?php echo esc_html( $notification['text'] ); ?>
+								<?php echo esc_html( $notification['text'] ?? '' ); ?>
 							</td>
 							<td class="qm-ltr">
-								<?php echo wp_json_encode( $notification['data'] ); ?>
+								<?php echo wp_json_encode( $notification['data'] ?? '' ); ?>
 							</td>
 						</tr>
 						<?php
@@ -102,7 +102,7 @@ class QM_Output_Notifications extends QM_Output_Html {
 
 		$title[] = sprintf(
 			/* translators: the number of notifications */
-			_nx( '%d notification', '%d notifications', count( $data['notifications'] ), 'Workflow notifications', 'query-monitor' ),
+			_nx( '%d notification', '%d notifications', count( $data['notifications'] ), 'Workflow notifications', 'altis' ),
 			count( $data['notifications'] )
 		);
 
@@ -133,7 +133,7 @@ class QM_Output_Notifications extends QM_Output_Html {
 			'id'    => 'qm-workflow_notifications',
 			'href'  => '#qm-workflow_notifications',
 			/* translators: the number of notifications */
-			'title' => sprintf( _n( '%d Workflow notification', '%d Workflow notifications', count( $data['notifications'] ), 'query-monitor' ), count( $data['notifications'] ) ),
+			'title' => sprintf( _n( '%d Workflow notification', '%d Workflow notifications', count( $data['notifications'] ), 'altis' ), count( $data['notifications'] ) ),
 		] );
 
 		return $menu;

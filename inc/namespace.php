@@ -8,6 +8,8 @@
 namespace Altis\Workflow;
 
 use Altis;
+use Altis\Workflow\Notifications\QM_Collector_Notifications;
+use Altis\Workflow\Notifications\QM_Output_Notifications;
 use QM_Collectors;
 
 /**
@@ -18,7 +20,6 @@ use QM_Collectors;
 function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_workflows', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
-	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_query_monitor_debug' );
 }
 
 /**
@@ -32,6 +33,9 @@ function load_workflows() {
 		return;
 	}
 	require_once Altis\ROOT_DIR . '/vendor/humanmade/workflows/plugin.php';
+
+	add_filter( 'qm/collectors', __NAMESPACE__ . '\\register_workflow_notification_qm_collector' );
+	add_filter( 'qm/outputter/html', __NAMESPACE__ . '\\register_workflow_notification_qm_output_html' );
 }
 
 /**
@@ -58,28 +62,29 @@ function load_publication_checklist() {
 }
 
 /**
- * Load the QM Collector for debugging notifications.
+ * Register the collector to QM.
+ *
+ * @param array $collectors
+ *
+ * @return array
  */
-function load_query_monitor_debug() {
+function register_workflow_notification_qm_collector( array $collectors ) : array {
+	$collectors['altis-workflow'] = new QM_Collector_Notifications();
+	return $collectors;
+}
 
-	if ( ! class_exists( QM_Collectors::class ) ) {
-		return;
+/**
+ * Add the Collector Output.
+ *
+ * @param array $output
+ * @param QM_Collectors $collectors
+ *
+ * @return array
+ */
+function register_workflow_notification_qm_output_html( array $output, QM_Collectors $collectors ) : array {
+	$collector = QM_Collectors::get( 'workflow_notifications' );
+	if ( $collector !== null ) {
+		$output['workflow_notifications'] = new QM_Output_Notifications( $collector );
 	}
-
-	require_once __DIR__ . '/class-qm-collector-notifications.php';
-	QM_Collectors::add( new QM_Collector_Notifications() );
-
-	add_filter(
-		'qm/outputter/html',
-		function( array $output, QM_Collectors $collectors ) {
-			require_once __DIR__ . '/class-qm-output-notifications.php';
-			$collector = QM_Collectors::get( 'workflow_notifications' );
-			if ( $collector !== null ) {
-				$output['workflow_notifications'] = new QM_Output_Notifications( $collector );
-			}
-			return $output;
-		},
-		101,
-		2
-	);
+	return $output;
 }

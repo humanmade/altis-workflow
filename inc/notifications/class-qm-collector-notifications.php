@@ -3,7 +3,7 @@
  * Data collector class
  */
 
-namespace Altis\Workflow;
+namespace Altis\Workflow\Notifications;
 
 use QM_Collector;
 
@@ -17,7 +17,7 @@ class QM_Collector_Notifications extends QM_Collector {
 	 * @return string|void
 	 */
 	public function name() {
-		return __( 'Workflow Notifications', 'query-monitor' );
+		return __( 'Workflow Notifications', 'altis' );
 	}
 
 	/**
