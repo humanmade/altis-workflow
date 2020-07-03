@@ -19,7 +19,8 @@
             "inc/"
         ],
         "files": [
-            "inc/namespace.php"
+            "inc/namespace.php",
+            "inc/notifications/namespace.php"
         ]
     },
     "extra": {
