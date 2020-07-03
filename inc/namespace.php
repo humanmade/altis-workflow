@@ -15,7 +15,7 @@ use Altis;
  * @return void
  */
 function bootstrap() {
-	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_workflows', 0 );
+	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_notifications', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
 }
 
@@ -24,12 +24,8 @@ function bootstrap() {
  *
  * @return void
  */
-function load_workflows() {
-	$config = Altis\get_config()['modules']['workflow']['notifications'] ?? null;
-	if ( ! $config ) {
-		return;
-	}
-	require_once Altis\ROOT_DIR . '/vendor/humanmade/workflows/plugin.php';
+function load_notifications() {
+	Notifications\setup();
 }
 
 /**
