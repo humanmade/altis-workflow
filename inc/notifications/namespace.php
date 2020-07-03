@@ -14,27 +14,33 @@ use HM\Workflows\Workflow;
  * Interpret configuration and set up hooks.
  */
 function setup() {
-	$config = Altis\get_config()['modules']['workflow'];
+	$config = Altis\get_config()['modules']['workflow']['notifications'] ?? null;
 
-	if ( ! $config['notifications'] ) {
+	if ( ! is_array( $config ) && ! $config ) {
 		return;
 	}
 
-	if ( $config['notifications']['on-post-published'] ) {
+	if ( ! is_array( $config ) ) {
+		$config = [];
+	}
+
+	if ( $config['on-post-published'] ?? false ) {
 		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_post_published' );
 	}
 
-	if ( $config['notifications']['on-submit-for-review'] ) {
+	if ( $config['on-submit-for-review'] ?? false ) {
 		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_submit_for_review' );
 	}
 
-	if ( $config['notifications']['on-update-assignees'] ) {
+	if ( $config['on-update-assignees'] ?? false ) {
 		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_update_assignees' );
 	}
 
-	if ( $config['notifications']['on-editorial-comment'] ) {
+	if ( $config['on-editorial-comment'] ?? false ) {
 		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_editorial_comment' );
 	}
+
+	require_once Altis\ROOT_DIR . '/vendor/humanmade/workflows/plugin.php';
 }
 
 /**
