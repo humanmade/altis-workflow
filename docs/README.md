@@ -12,8 +12,8 @@ Notifications fill in the gaps between events happening and informing those who 
 
 [Editorial comments](editorial-comments.md) allow content creators to discuss and track the progress of their work as well as assign a piece of content to someone else.
 
-## Default workflows
+## Built-in notifications
 
 Some common workflow scenarios including a publishing approval workflow are provided by default but you can disable them as necessary if your needs are more complex.
 
-[You can find more details about the default workflows here](default-workflows.md).
+[You can find more details about the default workflows here](built-in-notifications.md).
