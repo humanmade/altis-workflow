@@ -1,4 +1,9 @@
 <?php
+/**
+ * QM Notifications output class.
+ *
+ * @package altis/workflow
+ */
 
 namespace Altis\Workflow\Notifications;
 
@@ -15,13 +20,21 @@ class QM_Output_Notifications extends QM_Output_Html {
 	/**
 	 * QM_Output_Notifications constructor.
 	 *
-	 * @param QM_Collector $collector
+	 * @param QM_Collector $collector Collector object instance.
 	 */
 	public function __construct( QM_Collector $collector ) {
 		parent::__construct( $collector );
 		add_filter( 'qm/output/menus', [ $this, 'admin_menu' ], 101 );
 		add_filter( 'qm/output/title', [ $this, 'admin_title' ], 101 );
-		add_filter( 'qm/output/menu_class', [ $this, 'admin_class' ] );
+	}
+
+	/**
+	 * Defines the name of the collector.
+	 *
+	 * @return string|void
+	 */
+	public function name() {
+		return __( 'Workflow Notifications', 'altis' );
 	}
 
 	/**
@@ -91,14 +104,17 @@ class QM_Output_Notifications extends QM_Output_Html {
 	}
 
 	/**
-	 * Adds data to top admin bar
+	 * Adds data to top admin bar.
 	 *
-	 * @param array $title
-	 *
+	 * @param array $title Array of title parts.
 	 * @return array
 	 */
 	public function admin_title( array $title ) : array {
 		$data = $this->collector->get_data();
+
+		if ( count( $data['notifications'] ) === 0 ) {
+			return $title;
+		}
 
 		$title[] = sprintf(
 			/* translators: the number of notifications */
@@ -110,19 +126,9 @@ class QM_Output_Notifications extends QM_Output_Html {
 	}
 
 	/**
-	 * @param array $class
+	 * Add menu item for panel.
 	 *
-	 * @return array
-	 */
-	public function admin_class( array $class ) {
-		$class[] = 'qm-altis-workflow';
-
-		return $class;
-	}
-
-	/**
-	 * @param array $menu
-	 *
+	 * @param array $menu The Query Monitor menu item array.
 	 * @return array
 	 */
 	public function admin_menu( array $menu ) :array {
@@ -130,8 +136,8 @@ class QM_Output_Notifications extends QM_Output_Html {
 		$data = $this->collector->get_data();
 
 		$menu[] = $this->menu( [
-			'id'    => 'qm-altis-workflow',
-			'href'  => '#qm-altis-workflow',
+			'id'    => 'qm-altis-notifications',
+			'href'  => '#qm-altis-notifications',
 			/* translators: the number of notifications */
 			'title' => sprintf( _n( '%d Workflow notification', '%d Workflow notifications', count( $data['notifications'] ), 'altis' ), count( $data['notifications'] ) ),
 		] );

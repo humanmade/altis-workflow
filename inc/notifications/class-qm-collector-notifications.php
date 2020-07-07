@@ -1,24 +1,25 @@
 <?php
 /**
- * Data collector class
+ * Data collector class.
+ *
+ * @package altis/workflow
  */
 
 namespace Altis\Workflow\Notifications;
 
 use QM_Collector;
 
+/**
+ * QM Collector for Notifications.
+ */
 class QM_Collector_Notifications extends QM_Collector {
 
-	public $id = 'altis-workflow';
-
 	/**
-	 * Defines the name of the collector.
+	 * Collector ID.
 	 *
-	 * @return string|void
+	 * @var string
 	 */
-	public function name() {
-		return __( 'Workflow Notifications', 'altis' );
-	}
+	public $id = 'altis-notifications';
 
 	/**
 	 * Generate the data for the collector output.

@@ -139,27 +139,25 @@ function on_editorial_comment() {
 /**
  * Register the collector to QM.
  *
- * @param array $collectors
- *
+ * @param array $collectors Array of Query Monitor collector objects.
  * @return array
  */
 function register_workflow_notification_qm_collector( array $collectors ) : array {
-	$collectors['altis-workflow'] = new QM_Collector_Notifications();
+	$collectors['altis-notifications'] = new QM_Collector_Notifications();
 	return $collectors;
 }
 
 /**
  * Add the Collector Output.
  *
- * @param array $output
- * @param QM_Collectors $collectors
- *
+ * @param array $output Output panel objects array.
+ * @param QM_Collectors $collectors Collectors factory object.
  * @return array
  */
 function register_workflow_notification_qm_output_html( array $output, QM_Collectors $collectors ) : array {
-	$collector = QM_Collectors::get( 'altis-workflow' );
+	$collector = $collectors::get( 'altis-notifications' );
 	if ( $collector !== null ) {
-		$output['altis-workflow'] = new QM_Output_Notifications( $collector );
+		$output['altis-notifications'] = new QM_Output_Notifications( $collector );
 	}
 	return $output;
 }
