@@ -15,6 +15,9 @@
         }
     ],
     "autoload": {
+        "classmap": [
+            "inc/"
+        ],
         "files": [
             "inc/namespace.php",
             "inc/notifications/namespace.php"
