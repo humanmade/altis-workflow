@@ -9,6 +9,7 @@ namespace Altis\Workflow\Notifications;
 
 use Altis;
 use HM\Workflows\Workflow;
+use QM_Collectors;
 
 /**
  * Interpret configuration and set up hooks.
@@ -39,6 +40,9 @@ function setup() {
 	if ( $config['on-editorial-comment'] ?? false ) {
 		add_action( 'hm.workflows.init', __NAMESPACE__ . '\\on_editorial_comment' );
 	}
+
+	add_filter( 'qm/collectors', __NAMESPACE__ . '\\register_workflow_notification_qm_collector' );
+	add_filter( 'qm/outputter/html', __NAMESPACE__ . '\\register_workflow_notification_qm_output_html', 10, 2 );
 
 	require_once Altis\ROOT_DIR . '/vendor/humanmade/workflows/plugin.php';
 }
@@ -130,4 +134,32 @@ function on_editorial_comment() {
 		->who( 'post_author' )
 		->where( 'email' )
 		->where( 'dashboard' );
+}
+
+/**
+ * Register the collector to QM.
+ *
+ * @param array $collectors
+ *
+ * @return array
+ */
+function register_workflow_notification_qm_collector( array $collectors ) : array {
+	$collectors['altis-workflow'] = new QM_Collector_Notifications();
+	return $collectors;
+}
+
+/**
+ * Add the Collector Output.
+ *
+ * @param array $output
+ * @param QM_Collectors $collectors
+ *
+ * @return array
+ */
+function register_workflow_notification_qm_output_html( array $output, QM_Collectors $collectors ) : array {
+	$collector = QM_Collectors::get( 'altis-workflow' );
+	if ( $collector !== null ) {
+		$output['altis-workflow'] = new QM_Output_Notifications( $collector );
+	}
+	return $output;
 }

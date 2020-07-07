@@ -115,7 +115,7 @@ class QM_Output_Notifications extends QM_Output_Html {
 	 * @return array
 	 */
 	public function admin_class( array $class ) {
-		$class[] = 'qm-workflow_notifications';
+		$class[] = 'qm-altis-workflow';
 
 		return $class;
 	}
@@ -130,8 +130,8 @@ class QM_Output_Notifications extends QM_Output_Html {
 		$data = $this->collector->get_data();
 
 		$menu[] = $this->menu( [
-			'id'    => 'qm-workflow_notifications',
-			'href'  => '#qm-workflow_notifications',
+			'id'    => 'qm-altis-workflow',
+			'href'  => '#qm-altis-workflow',
 			/* translators: the number of notifications */
 			'title' => sprintf( _n( '%d Workflow notification', '%d Workflow notifications', count( $data['notifications'] ), 'altis' ), count( $data['notifications'] ) ),
 		] );

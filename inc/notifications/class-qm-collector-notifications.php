@@ -9,7 +9,7 @@ use QM_Collector;
 
 class QM_Collector_Notifications extends QM_Collector {
 
-	public $id = 'workflow_notifications';
+	public $id = 'altis-workflow';
 
 	/**
 	 * Defines the name of the collector.
