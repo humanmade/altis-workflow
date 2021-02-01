@@ -24,6 +24,11 @@
         ]
     },
     "extra": {
-        "altis": {}
+        "altis": {
+            "install-overrides": [
+                "humanmade/workflows",
+                "humanmade/publication-checklist"
+            ]
+        }
     }
 }
