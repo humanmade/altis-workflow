@@ -17,7 +17,7 @@ use Altis;
 function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_notifications', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
-	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts', 0 );
+	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 999 );
 }
 
