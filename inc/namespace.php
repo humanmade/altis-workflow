@@ -17,6 +17,7 @@ use Altis;
 function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_notifications', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
+	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts', 0 );
 }
 
 /**
@@ -49,4 +50,18 @@ function load_publication_checklist() {
 	}
 
 	require_once Altis\ROOT_DIR . '/vendor/humanmade/publication-checklist/plugin.php';
+}
+
+/**
+ * Load Yoast Duplicate Posts, if enabled.
+ */
+function load_duplicate_posts() {
+	$config = Altis\get_config()['modules']['workflow']['clone-republish'] ?? null;
+
+	// Bail if Clone & Republish is disabled.
+	if ( ! $config ) {
+		return;
+	}
+
+	require_once Altis\ROOT_DIR . '/vendor/yoast/duplicate-post/duplicate-post.php';
 }
