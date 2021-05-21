@@ -18,6 +18,7 @@ function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_notifications', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts', 0 );
+	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 999 );
 }
 
 /**
@@ -62,6 +63,12 @@ function load_duplicate_posts() {
 	if ( ! $config ) {
 		return;
 	}
-
 	require_once Altis\ROOT_DIR . '/vendor/yoast/duplicate-post/duplicate-post.php';
+}
+
+/**
+ * Remove the Duplicate Post settings page.
+ */
+function remove_duplicate_post_admin_page() {
+	remove_submenu_page( 'options-general.php', 'duplicatepost' );
 }
