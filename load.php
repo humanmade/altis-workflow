@@ -23,6 +23,9 @@ add_action( 'altis.modules.init', function () {
 			'block-on-failing' => false,
 			'hide-column' => false,
 		],
+		'clone-republish' => [
+			'enabled' => true,
+		],
 	];
 	Altis\register_module( 'workflow', __DIR__, 'Workflow', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );
