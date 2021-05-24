@@ -25,6 +25,10 @@ add_action( 'altis.modules.init', function () {
 		],
 		'clone-republish' => [
 			'enabled' => true,
+			'post-types-enabled' => [
+				'post',
+				'page',
+			],
 		],
 	];
 	Altis\register_module( 'workflow', __DIR__, 'Workflow', $default_settings, __NAMESPACE__ . '\\bootstrap' );
