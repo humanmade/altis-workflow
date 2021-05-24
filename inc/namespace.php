@@ -19,6 +19,8 @@ function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 99 );
+	add_filter( 'manage_post_posts_columns', __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
+	add_filter( 'manage_page_posts_columns', __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
 }
 
 /**
@@ -73,4 +75,18 @@ function load_duplicate_posts() {
  */
 function remove_duplicate_post_admin_page() {
 	remove_submenu_page( 'options-general.php', 'duplicatepost' );
+}
+
+/**
+ * Remove the duplicate_post_original_item column.
+ *
+ * This column, on the post list, causes display/formatting issues and doesn't add any value, since the information is repeated in the title column.
+ *
+ * @param array $columns The array of post columns.
+ *
+ * @return array         The filtered array of columns.
+ */
+function remove_duplicate_post_original_item_column( array $columns ) : array {
+	unset( $columns['duplicate_post_original_item'] );
+	return $columns;
 }
