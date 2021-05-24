@@ -28,7 +28,8 @@
         "altis": {
             "install-overrides": [
                 "humanmade/workflows",
-                "humanmade/publication-checklist"
+                "humanmade/publication-checklist",
+                "yoast/duplicate-post"
             ]
         }
     }
