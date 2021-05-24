@@ -19,9 +19,9 @@ function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 99 );
-	add_action( 'admin_init', __NAMESPACE__ . '\\maybe_update_duplicate_post_post_types' );
 	add_filter( 'manage_post_posts_columns', __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
 	add_filter( 'manage_page_posts_columns', __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
+	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\maybe_update_duplicate_post_post_types' );
 }
 
 /**
@@ -82,23 +82,20 @@ function remove_duplicate_post_admin_page() {
  * Update the Duplicate Post supported post types if the config option defines new or different post types than the defautls.
  *
  * Default supported post types are 'post' and 'page'.
+ *
+ * Note: The configured option will _replace_ any enabled post types by default.
+ *
+ * @param array $enabled_post_types The post types that are supported by Duplicate Post.
+ * @return array                    The filtered array of supported post types.
  */
-function maybe_update_duplicate_post_post_types() {
-	$default_post_types = [ 'post', 'page' ];
-	$config = Altis\get_config()['modules']['workflow']['clone-republish']['post-types-enabled'] ?? $default_post_types;
-	$post_types_enabled = get_option( 'duplicate_post_types_enabled' );
+function maybe_update_duplicate_post_post_types( array $enabled_post_types ) : array {
+	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types-enabled'] ?? null;
 
-	if (
-		// Check if there's a difference between the default post types and the ones that are saved in the database.
-		! array_diff( $default_post_types, $post_types_enabled ) &&
-		// Check if there's a difference between what's in the config and what's in the database.
-		! array_diff( $config, $post_types_enabled )
-	) {
-		return;
+	if ( ! $post_types ) {
+		return $enabled_post_types;
 	}
 
-	// Update the database with non-default post types.
-	update_option( 'duplicate_post_types_enabled', $config );
+	return $post_types;
 }
 
 /**
