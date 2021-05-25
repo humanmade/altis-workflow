@@ -84,7 +84,7 @@ function remove_duplicate_post_admin_page() {
 }
 
 /**
- * Update the Duplicate Post supported post types if the config option defines new or different post types than the defautls.
+ * Override the Duplicate Post supported post types if the config option defines new or different post types than the defautls.
  *
  * Default supported post types are 'post' and 'page'.
  *
