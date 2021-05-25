@@ -91,7 +91,7 @@ function remove_duplicate_post_admin_page() {
  * @return array The filtered array of supported post types.
  */
 function maybe_update_duplicate_post_post_types( array $enabled_post_types ) : array {
-	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types-enabled'] ?? null;
+	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types'] ?? null;
 
 	if ( ! $post_types ) {
 		return $enabled_post_types;

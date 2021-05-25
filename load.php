@@ -25,7 +25,7 @@ add_action( 'altis.modules.init', function () {
 		],
 		'clone-republish' => [
 			'enabled' => true,
-			'post-types-enabled' => [
+			'post-types' => [
 				'post',
 				'page',
 			],
