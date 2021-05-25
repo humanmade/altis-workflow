@@ -117,6 +117,11 @@ function remove_duplicate_post_original_item_column( array $columns ) : array {
 	return $columns;
 }
 
+/**
+ * Return an array of post types supported by Duplicate Post.
+ *
+ * @return array The array of enabled post types.
+ */
 function get_duplicate_post_types() : array {
 	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types'] ?? [];
 
