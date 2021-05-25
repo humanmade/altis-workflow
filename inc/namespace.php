@@ -86,7 +86,7 @@ function remove_duplicate_post_admin_page() {
  * Note: The configured option will _replace_ any enabled post types by default.
  *
  * @param array $enabled_post_types The post types that are supported by Duplicate Post.
- * @return array                    The filtered array of supported post types.
+ * @return array The filtered array of supported post types.
  */
 function maybe_update_duplicate_post_post_types( array $enabled_post_types ) : array {
 	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types-enabled'] ?? null;
