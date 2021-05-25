@@ -8,6 +8,7 @@
 namespace Altis\Workflow;
 
 use Altis;
+use Yoast\WP\Duplicate_Post\Duplicate_Post;
 
 /**
  * Bootstrap Workflow module.
@@ -69,6 +70,7 @@ function load_duplicate_posts() {
 
 	// Load the main plugin file.
 	require_once Altis\ROOT_DIR . '/vendor/yoast/duplicate-post/duplicate-post.php';
+	new Duplicate_Post();
 }
 
 /**
