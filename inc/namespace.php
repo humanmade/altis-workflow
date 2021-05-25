@@ -23,6 +23,11 @@ function bootstrap() {
 	add_filter( 'manage_post_posts_columns', __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
 	add_filter( 'manage_page_posts_columns', __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\maybe_update_duplicate_post_post_types' );
+
+	$enabled_post_types = get_duplicate_post_types();
+	foreach ( $enabled_post_types as $post_type ) {
+		add_filter( "manage_{$post_type}_posts_columns", __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
+	}
 }
 
 /**
