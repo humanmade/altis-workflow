@@ -105,7 +105,7 @@ function maybe_update_duplicate_post_post_types( array $enabled_post_types ) : a
  *
  * @param array $columns The array of post columns.
  *
- * @return array         The filtered array of columns.
+ * @return array The filtered array of columns.
  */
 function remove_duplicate_post_original_item_column( array $columns ) : array {
 	unset( $columns['duplicate_post_original_item'] );
