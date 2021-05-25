@@ -18,9 +18,13 @@ This feature is enabled by default, but can be disabled by editing the configura
 }
 ```
 
+![Quick Action row options](./assets/duplicate-post-list.png)
+
 ## Post Cloning
 
 This feature adds a link to the post list screen that allows a user to clone a post with its metadata and terms to a new, identical post. This duplicate post will automatically link back to the original post but this reference can be removed by editing the post and checking the "Delete reference to original item" checkbox in the Duplicate Post panel in the editor.
+
+![Duplicate post delete reference panel](./assets/duplicate-post-delete-reference.png)
 
 ## New Draft
 
