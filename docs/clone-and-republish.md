@@ -1,6 +1,6 @@
 # Clone & Republish
 
-The Clone & Republish feature of Altis adds two separate, powerful features that work together to improve your content management workflows.
+The Clone & Republish feature of Altis, powered by the [Duplicate Post plugin by Yoast](https://yoast.com/wordpress/plugins/duplicate-post/), adds two powerful features that work together to improve your content management workflows.
 
 This feature is enabled by default, but can be disabled by editing the configuration file:
 
