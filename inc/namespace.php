@@ -21,8 +21,6 @@ function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 99 );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\maybe_override_enabled_post_types' );
-	add_filter( 'manage_page_posts_columns', __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
-	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\maybe_update_duplicate_post_post_types' );
 
 	$enabled_post_types = get_duplicate_post_types();
 	foreach ( $enabled_post_types as $post_type ) {
@@ -117,4 +115,10 @@ function maybe_override_enabled_post_types( array $enabled_post_types ) : array 
 function remove_duplicate_post_original_item_column( array $columns ) : array {
 	unset( $columns['duplicate_post_original_item'] );
 	return $columns;
+}
+
+function get_duplicate_post_types() : array {
+	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types'] ?? [];
+
+	return apply_filters( 'duplicate_post_enabled_post_types', $post_types );
 }
