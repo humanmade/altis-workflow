@@ -8,7 +8,6 @@
 namespace Altis\Workflow;
 
 use Altis;
-use Yoast\WP\Duplicate_Post\Duplicate_Post;
 
 /**
  * Bootstrap Workflow module.
