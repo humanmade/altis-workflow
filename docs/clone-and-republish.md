@@ -73,8 +73,11 @@ Allows you to exclude specific meta fields from duplicated posts.
 **Example:**
 ```php
 add_filter( 'duplicate_post_excludelist_filter', function( array $meta_excludelist ) {
-	// Merges the defaults array with our own array of custom fields.
-    return array_merge( $meta_excludelist, [ 'my_custom_field1', 'my_custom_field2' ] );
+	// Add custom fields to the defaults array.
+	$meta_excludelist[] = 'my_custom_field_1';
+	$meta_excludelist[] = 'my_custom_field_2';
+
+	return $meta_excludelist;
 } );
 ```
 
