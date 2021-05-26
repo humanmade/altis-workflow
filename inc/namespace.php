@@ -21,6 +21,8 @@ function bootstrap() {
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 99 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_post_columns', 1000 );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\maybe_override_enabled_post_types' );
+	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
+	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
 }
 
 /**
@@ -119,6 +121,32 @@ function filter_duplicate_post_columns() {
 	foreach ( $enabled_post_types as $post_type ) {
 		add_filter( "manage_{$post_type}_posts_columns", __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
 	}
+}
+
+/**
+ * Allow the roles defined in the Altis config to duplicate posts by default.
+ *
+ * @param mixed $roles The duplicate_post_roles value.
+ *
+ * @return array The filtered array of allowed roles.
+ */
+function filter_duplicate_post_roles( $roles ) : array {
+	$roles = Altis\get_config()['modules']['workflow']['clone-republish']['roles'] ?? $roles;
+
+	return $roles;
+}
+
+/**
+ * Exclude taxonomies defined in the Altis config, if specified.
+ *
+ * @param mixed $taxonomies An array of taxonomies to exclude from duplicated posts, if it exists.
+ *
+ * @return array The filtered array of excluded taxonomies.
+ */
+function filter_duplicate_post_excluded_taxonomies( $taxonomies ) : array {
+	$taxonomies = Altis\get_config()['modules']['workflow']['clone-republish']['taxonomies'] ?? [];
+
+	return $taxonomies;
 }
 
 /**
