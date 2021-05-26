@@ -151,4 +151,9 @@ Returns the original post of the requested post/post ID, either as a post object
 **`$post`** _(int|WP_Post|null)_ (optional) Post ID or post object. Defaults to the global `$post`.
 **`$output`** _(string)_ (optional) The required return type. One of `OBJECT`, `ARRAY_A` or `ARRAY_N`, which correspond to a `WP_Post` object, an associative array, or a numeric array, respectively. Defaults to `OBJECT`.
 
+**Example:**
+```php
+$original_post = duplicate_post_get_original( $cloned_post_id, ARRAY_A );
+``
+
 For full documentation on available [template tags](https://developer.yoast.com/duplicate-post/functions-template-tags) and [action and filter hooks](https://developer.yoast.com/duplicate-post/filters-actions), go to the [Yoast Duplicate Post developer documentation site](https://developer.yoast.com/duplicate-post/overview).
