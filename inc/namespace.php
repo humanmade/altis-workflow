@@ -20,12 +20,8 @@ function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_publication_checklist', 0 );
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 99 );
+	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_post_columns', 1000 );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\maybe_override_enabled_post_types' );
-
-	$enabled_post_types = get_duplicate_post_types();
-	foreach ( $enabled_post_types as $post_type ) {
-		add_filter( "manage_{$post_type}_posts_columns", __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
-	}
 }
 
 /**
@@ -114,6 +110,16 @@ function maybe_override_enabled_post_types( array $enabled_post_types ) : array 
 function remove_duplicate_post_original_item_column( array $columns ) : array {
 	unset( $columns['duplicate_post_original_item'] );
 	return $columns;
+}
+
+/**
+ * Removes the "Original Post" column in the post list for all supported post types.
+ */
+function filter_duplicate_post_columns() {
+	$enabled_post_types = get_duplicate_post_types();
+	foreach ( $enabled_post_types as $post_type ) {
+		add_filter( "manage_{$post_type}_posts_columns", __NAMESPACE__ . '\\remove_duplicate_post_original_item_column', 11 );
+	}
 }
 
 /**
