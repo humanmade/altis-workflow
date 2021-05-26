@@ -60,4 +60,95 @@ The example above enables the Clone & Republish features on the `page` and `prod
 
 ## Developer Documentation
 
+### Filters
+
+#### `duplicate_post_excludelist_filter`
+
+Allows you to exclude specific meta fields from duplicated posts.
+
+**Parameters**
+
+**`$meta_excludelist` _(array)_ The default exclusion list.
+
+**Example:**
+```php
+add_filter( 'duplicate_post_excludelist_filter', function( array $meta_excludelist ) {
+	// Merges the defaults array with our own array of custom fields.
+    return array_merge( $meta_excludelist, [ 'my_custom_field1', 'my_custom_field2' ] );
+} );
+```
+
+#### `duplicate_post_meta_keys_filter`
+
+Allows you to retrieve or alter meta fields' keys after excluding meta fields.
+
+**Parameters**
+
+**`$meta_keys`** _(array)_ The meta keys in the original post, minus those that were previously excluded.
+
+**Example:**
+```php
+add_filter( 'duplicate_post_meta_keys_filter', function( array $meta_keys ) {
+    // Add an additional meta key to the array.
+    $meta_keys[] = 'my_custom_field3';
+
+    return $meta_keys;
+} );
+```
+
+#### `duplicate_post_pre_copy`
+
+Action hook that fires just before cloning a post.
+
+**Parameters**
+
+**`$post`** _(WP_Post)_ The original post object.
+
+**`$status`** _(bool)_ The intended destination status.
+
+**`$parent_id`** _(int)_ The parent post ID if called recursively.
+
+**Example:**
+```php
+add_action( 'duplicate_post_pre_copy', function( $post ) {
+	// Perform an action before copying the post.
+	if ( $post->post_type === 'product' ) {
+		update_post_meta( $post->ID, 'product_type', 't-shirt' );
+	}
+} )
+```
+
+#### `duplicate_post_post_copy`
+
+Action hook that fires after cloning a post.
+
+**Parameters**
+
+**`$new_post_id`** _(int|WP_Error)_ The new post id or WP_Error object on error.
+
+**`$post`** _(WP_Post)_ The original post object.
+
+**`$status`** _(bool)_ The intended destination status.
+
+**`$parent_id`** _(int)_ The parent post ID if called recursively.
+
+**Example:**
+```php
+add_action( 'duplicate_post_post_copy', function( $new_post_id, $post ) {
+	// Perform an action after copying the post.
+	if ( $post->post_type === 'product' ) {
+		delete_post( $post->ID, $post );
+	}
+} )
+```
+
+#### `duplicate_post_get_original( $post, $output )`
+
+Returns the original post of the requested post/post ID, either as a post object, an associative array or a numeric array.
+
+**Parameters**
+
+**`$post`** _(int|WP_Post|null)_ (optional) Post ID or post object. Defaults to the global `$post`.
+**`$output`** _(string)_ (optional) The required return type. One of `OBJECT`, `ARRAY_A` or `ARRAY_N`, which correspond to a `WP_Post` object, an associative array, or a numeric array, respectively. Defaults to `OBJECT`.
+
 For full documentation on available [template tags](https://developer.yoast.com/duplicate-post/functions-template-tags) and [action and filter hooks](https://developer.yoast.com/duplicate-post/filters-actions), go to the [Yoast Duplicate Post developer documentation site](https://developer.yoast.com/duplicate-post/overview).
