@@ -38,7 +38,7 @@ When you click the link to Rewrite & Republish a post, a cloned version of that 
 
 ## Enabled Post Types
 
-The post cloning, new draft and rewrite & republish features are enabled for `post` and `page` post types by default. You can modify this behavior by passing the post types you want to enable these features on to the `altis.modules.workflow.clone-republish.post-types` configuration option.
+The post cloning, new draft and rewrite & republish features are enabled for all public post types by default. You can modify this behavior by passing the post types you want to enable these features on to the `altis.modules.workflow.clone-republish.post-types` configuration option.
 
 ```json
 {
@@ -56,7 +56,7 @@ The post cloning, new draft and rewrite & republish features are enabled for `po
 }
 ```
 
-The example above enables the Clone & Republish features on the `page` and `product` post types only. In this case, those features would _not_ be available for the `post` post type.
+The example above enables the Clone & Republish features on the `page` and `product` post types only. In this case, those features would _not_ be available for the `post` post type or other publicly available post types.
 
 ## Developer Documentation
 
