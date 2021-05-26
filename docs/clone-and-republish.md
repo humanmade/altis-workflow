@@ -82,7 +82,7 @@ In the example above, Authors have been added to the list of allowed roles.
 
 ## Excluded Taxonomies
 
-Specific taxonomies can be excluded from posts that are duplicated. This applies to _all_ duplication actions (whether from duplicating an existing published post to update and revise it, or from simply creating a copy of a post). The content or taxonomies that are copied on an individual post level can be modified by using internal Duplicate Post filters (like the [duplicate_post_new_post filter](#duplicate_post_new_post) described below), but a blanket rule to exclude certain taxonomies can be added at the config level.
+Specific taxonomies can be excluded from posts that are duplicated. This applies to _all_ duplication actions (whether from duplicating an existing published post to update and revise it, or from simply creating a copy of a post). Excluding taxonomies creates a blanket rule to exclude those taxonomies from being copied to duplicate posts at the config level.
 
 ```json
 {
@@ -160,6 +160,7 @@ add_filter( 'duplicate_post_new_post', function( array $new_post ) {
 	return $new_post;
 } );
 ```
+
 ### Actions
 
 #### `duplicate_post_pre_copy`
