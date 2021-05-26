@@ -31,7 +31,7 @@ add_action( 'altis.modules.init', function () {
 			],
 			'roles' => [
 				'editor',
-				'administrator'
+				'administrator',
 			],
 			'excluded-taxonomies' => false,
 		],
