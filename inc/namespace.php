@@ -125,10 +125,13 @@ function filter_duplicate_post_columns() {
 /**
  * Return an array of post types supported by Duplicate Post.
  *
+ * @uses get_post_types() The get_post_types function must be loaded for this function to work properly.
+ *
  * @return array The array of enabled post types.
  */
 function get_duplicate_post_types() : array {
-	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types'] ?? [];
+	$public_post_types = get_post_types( [ 'public' => true ], 'names' );
+	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types'] ?? $public_post_types;
 
 	return apply_filters( 'duplicate_post_enabled_post_types', $post_types );
 }
