@@ -47,7 +47,7 @@ The post cloning, new draft and rewrite & republish features are enabled for `po
 			"modules": {
 				"workflow": {
 					"clone-republish": {
-						"post-types": [ 'page', 'product' ]
+						"post-types": [ "page", "product" ]
 					}
 				}
 			}
