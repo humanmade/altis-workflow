@@ -161,6 +161,7 @@ add_action( 'duplicate_post_post_copy', function( $new_post_id, $post ) {
 	}
 } )
 ```
+### Functions
 
 #### `duplicate_post_get_original( $post, $output )`
 
