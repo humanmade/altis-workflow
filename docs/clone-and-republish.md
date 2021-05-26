@@ -96,6 +96,25 @@ add_filter( 'duplicate_post_meta_keys_filter', function( array $meta_keys ) {
 } );
 ```
 
+#### `duplicate_post_new_post`
+
+Allows you to filter the new post values before a duplicated post is inserted.
+
+**Parameters**
+
+**`$new_post`** _(array)_ New post values.
+
+**`$post`** _(WP_Post)_ Original post object.
+
+**Example:**
+```php
+add_filter( 'duplicate_post_new_post', function( array $new_post ) {
+	$new_post['post_content'] = $new_post['post_content'] . '<p>Additional content added to the post.</p>';
+
+	return $new_post;
+} );
+```
+
 #### `duplicate_post_pre_copy`
 
 Action hook that fires just before cloning a post.
