@@ -114,6 +114,7 @@ add_filter( 'duplicate_post_new_post', function( array $new_post ) {
 	return $new_post;
 } );
 ```
+### Actions
 
 #### `duplicate_post_pre_copy`
 
