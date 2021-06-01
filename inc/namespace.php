@@ -159,5 +159,6 @@ function filter_duplicate_post_excluded_taxonomies( $taxonomies ) : array {
 function get_duplicate_post_types() : array {
 	$public_post_types = get_post_types( [ 'public' => true ], 'names' );
 
-	return apply_filters( 'duplicate_post_enabled_post_types', $public_post_types );
+	// Apply filters later so we catch any post types enabled in the config.
+	return apply_filters( 'duplicate_post_enabled_post_types', $public_post_types, 20 );
 }
