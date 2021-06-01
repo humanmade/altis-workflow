@@ -30,7 +30,7 @@ add_action( 'altis.modules.init', function () {
 				'editor',
 				'administrator',
 			],
-			'excluded-taxonomies' => false,
+			'excluded-taxonomies' => null,
 		],
 	];
 	Altis\register_module( 'workflow', __DIR__, 'Workflow', $default_settings, __NAMESPACE__ . '\\bootstrap' );
