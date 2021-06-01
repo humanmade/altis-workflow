@@ -25,10 +25,7 @@ add_action( 'altis.modules.init', function () {
 		],
 		'clone-republish' => [
 			'enabled' => true,
-			'post-types' => [
-				'post',
-				'page',
-			],
+			'post-types' => null,
 			'roles' => [
 				'editor',
 				'administrator',
