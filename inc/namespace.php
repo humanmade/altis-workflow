@@ -158,7 +158,6 @@ function filter_duplicate_post_excluded_taxonomies( $taxonomies ) : array {
  */
 function get_duplicate_post_types() : array {
 	$public_post_types = get_post_types( [ 'public' => true ], 'names' );
-	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types'] ?? $public_post_types;
 
-	return apply_filters( 'duplicate_post_enabled_post_types', $post_types );
+	return apply_filters( 'duplicate_post_enabled_post_types', $public_post_types );
 }
