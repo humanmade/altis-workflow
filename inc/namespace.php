@@ -86,7 +86,7 @@ function remove_duplicate_post_admin_page() {
  *
  * Note: The configured option will _replace_ any enabled post types by default.
  *
- * @param array $enabled_post_types The post types that are supported by Duplicate Post.
+ * @param array $enabled_post_types The post types that are supported by Duplicate Post by default (not used).
  * @return array The filtered array of supported post types.
  */
 function set_enabled_post_types( array $enabled_post_types ) : array {
