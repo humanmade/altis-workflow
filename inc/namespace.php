@@ -24,6 +24,7 @@ function bootstrap() {
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
 	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_ab_test_meta_keys' );
+	add_filter( 'duplicate_post_new_post', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids' );
 }
 
 /**
@@ -171,4 +172,23 @@ function exclude_ab_test_meta_keys( array $meta_excludelist ) : array {
 	$meta_excludelist[] = '_altis_ab_test_*';
 
 	return $meta_excludelist;
+}
+
+/**
+ * Update XB client IDs when duplicating a post.
+ *
+ * @param array $post The duplicated post data.
+ *
+ * @return array The filtered duplicate post content.
+ */
+function duplicate_post_update_xb_client_ids( array $post ) : array {
+	$post['post_content'] = preg_replace_callback(
+		'#<!-- wp:altis/(personalization|experiment)\s+{.*?"clientId":"([a-z0-9-]+)"#',
+		function ( array $matches ) : string {
+			return str_replace( $matches[2], wp_generate_uuid4(), $matches[0] );
+		},
+		$post['post_content']
+	);
+
+	return $post;
 }
