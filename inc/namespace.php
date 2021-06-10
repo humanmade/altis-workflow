@@ -23,6 +23,7 @@ function bootstrap() {
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\set_enabled_post_types' );
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
+	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_ab_test_meta_keys' );
 }
 
 /**
@@ -157,4 +158,17 @@ function filter_duplicate_post_excluded_taxonomies( $taxonomies ) : array {
  */
 function get_duplicate_post_types() : array {
 	return apply_filters( 'duplicate_post_enabled_post_types', [] );
+}
+
+/**
+ * Exclude Altis A/B Test meta data from duplicated posts.
+ *
+ * @param array $meta_excludelist The meta exclude list from the Duplicate Post options.
+ *
+ * @return array The filtered exclude list array.
+ */
+function exclude_ab_test_meta_keys( array $meta_excludelist ) : array {
+	$meta_excludelist[] = '_altis_ab_test_*';
+
+	return $meta_excludelist;
 }
