@@ -25,7 +25,7 @@ function bootstrap() {
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
 	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_meta_keys' );
-	add_action( 'duplicate_post_post_copy', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids', 10, 2 );
+	add_filter( 'altis.analytics.blocks.override_xb_save_post_hook', __NAMESPACE__ . '\\override_xb_post_update', 10, 2 );
 }
 
 /**
@@ -226,4 +226,23 @@ function duplicate_post_update_xb_client_ids( int $new_post_id, WP_Post $post ) 
 	if ( ! is_wp_error( $updated ) ) {
 		add_post_meta( $new_post_id, '_altis_xb_clientId_updated', true );
 	}
+}
+
+/**
+ * Override the synchronization with the XB shadow post for rewritten posts.
+ *
+ * Conditionally setting this to true if the post is a rewritten copy prevents saves to the XB shadow post type.
+ *
+ * @param bool $default The default value whether to override.
+ * @param int $post_id The post ID of the post to check.
+ *
+ * @return bool Whether to override the save_post hook.
+ */
+function override_xb_post_update( bool $default, int $post_id ) : bool {
+	// If this post is a republished post, don't update the shadow XB post.
+	if ( get_post_meta( $post_id, '_dp_is_rewrite_republish_copy', true ) ) {
+		return true;
+	}
+
+	return $default;
 }
