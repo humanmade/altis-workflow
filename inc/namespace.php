@@ -23,7 +23,7 @@ function bootstrap() {
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\set_enabled_post_types' );
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
-	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_ab_test_meta_keys' );
+	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_meta_keys' );
 	add_filter( 'duplicate_post_new_post', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids' );
 }
 
@@ -168,8 +168,9 @@ function get_duplicate_post_types() : array {
  *
  * @return array The filtered exclude list array.
  */
-function exclude_ab_test_meta_keys( array $meta_excludelist ) : array {
+function exclude_meta_keys( array $meta_excludelist ) : array {
 	$meta_excludelist[] = '_altis_ab_test_*';
+	$meta_excludelist[] = '_altis_xb_clientId_updated';
 
 	return $meta_excludelist;
 }
