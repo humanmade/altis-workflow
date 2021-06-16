@@ -207,7 +207,6 @@ function duplicate_post_update_xb_client_ids( int $new_post_id, WP_Post $post ) 
 		return;
 	}
 
-	$post_content = $post->post_content;
 	$pattern = '#<!-- wp:altis/(personalization|experiment)\s+{.*?"clientId":"([a-z0-9-]+)"#';
 
 	$updated_post_content = preg_replace_callback(
@@ -215,7 +214,7 @@ function duplicate_post_update_xb_client_ids( int $new_post_id, WP_Post $post ) 
 		function ( array $matches ) : string {
 			return str_replace( $matches[2], wp_generate_uuid4(), $matches[0] );
 		},
-		$post_content
+		$post->post_content
 	);
 
 	// Update the post content.
