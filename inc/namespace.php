@@ -21,6 +21,7 @@ function bootstrap() {
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_duplicate_posts' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 99 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_post_columns', 1000 );
+	add_action( 'duplicate_post_post_copy', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids', 10, 2 );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\set_enabled_post_types' );
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
