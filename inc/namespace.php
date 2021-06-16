@@ -25,7 +25,7 @@ function bootstrap() {
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
 	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_meta_keys' );
-	add_filter( 'duplicate_post_new_post', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids' );
+	add_action( 'duplicate_post_post_copy', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids', 10, 2 );
 }
 
 /**
@@ -179,18 +179,50 @@ function exclude_meta_keys( array $meta_excludelist ) : array {
 /**
  * Update XB client IDs when duplicating a post.
  *
- * @param array $post The duplicated post data.
+ * @param array $new_post The duplicated post data.
+ * @param WP_Post $post The original WP_Post object.
  *
  * @return array The filtered duplicate post content.
  */
-function duplicate_post_update_xb_client_ids( array $post ) : array {
-	$post['post_content'] = preg_replace_callback(
-		'#<!-- wp:altis/(personalization|experiment)\s+{.*?"clientId":"([a-z0-9-]+)"#',
+function duplicate_post_update_xb_client_ids( int $new_post_id, WP_Post $post ) {
+	// Bail if we aren't on a post type supported by Duplicate Posts.
+	if ( ! in_array( $post->post_type, get_duplicate_post_types(), true ) ) {
+		return;
+	}
+
+	$cloned_post = get_post_meta( $new_post_id, '_dp_original', true );
+	$republished_post = get_post_meta( $new_post_id, '_dp_is_rewrite_republish_copy', true );
+
+	// Bail if this post hasn't been cloned. All duplicated posts are considered cloned posts.
+	if ( ! $cloned_post ) {
+		return;
+	}
+
+	// Bail if this is a republished post. Only republished posts have both meta keys.
+	if ( $republished_post ) {
+		return;
+	}
+
+	// Check if the client ID has been updated already.
+	$client_id_updated = get_post_meta( $new_post_id, '_altis_xb_clientId_updated', true );
+	if ( $client_id_updated ) {
+		return;
+	}
+
+	$post_content = $post->post_content;
+	$pattern = '#<!-- wp:altis/(personalization|experiment)\s+{.*?"clientId":"([a-z0-9-]+)"#';
+
+	$updated_post_content = preg_replace_callback(
+		$pattern,
 		function ( array $matches ) : string {
 			return str_replace( $matches[2], wp_generate_uuid4(), $matches[0] );
 		},
-		$post['post_content']
+		$post_content
 	);
 
-	return $post;
+	// Update the post content.
+	$new_post = get_post( $new_post_id );
+	$new_post->post_content = $updated_post_content;
+	add_post_meta( $new_post_id, '_altis_xb_clientId_updated', true );
+	wp_update_post( $new_post );
 }
