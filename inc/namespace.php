@@ -220,6 +220,10 @@ function duplicate_post_update_xb_client_ids( int $new_post_id, WP_Post $post ) 
 	// Update the post content.
 	$new_post = get_post( $new_post_id );
 	$new_post->post_content = $updated_post_content;
-	add_post_meta( $new_post_id, '_altis_xb_clientId_updated', true );
-	wp_update_post( $new_post );
+	$updated = wp_update_post( $new_post );
+
+	// Don't add the post meta if we've errored.
+	if ( ! is_wp_error( $updated ) ) {
+		add_post_meta( $new_post_id, '_altis_xb_clientId_updated', true );
+	}
 }
