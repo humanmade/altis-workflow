@@ -179,10 +179,8 @@ function exclude_meta_keys( array $meta_excludelist ) : array {
 /**
  * Update XB client IDs when duplicating a post.
  *
- * @param array $new_post The duplicated post data.
+ * @param array $new_post_ID The duplicated post ID.
  * @param WP_Post $post The original WP_Post object.
- *
- * @return array The filtered duplicate post content.
  */
 function duplicate_post_update_xb_client_ids( int $new_post_id, WP_Post $post ) {
 	// Bail if we aren't on a post type supported by Duplicate Posts.
