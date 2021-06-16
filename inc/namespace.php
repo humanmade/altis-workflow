@@ -8,6 +8,7 @@
 namespace Altis\Workflow;
 
 use Altis;
+use WP_Post;
 
 /**
  * Bootstrap Workflow module.
