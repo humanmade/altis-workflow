@@ -107,18 +107,22 @@ In the above example, Categories and Tags are excluded from cloned posts, meanin
 
 #### `duplicate_post_excludelist_filter`
 
-Allows you to exclude specific meta fields from duplicated posts.
+Allows you to exclude specific meta fields from duplicated posts. Values passed into the `$meta_excludelist` array can contain wildcards.
+
+Internally in the Duplicate Post plugin, the array is converted into a regular expression string where the `*` character is recognized as wildcard, before being turned back into an array and processed. This means that if you wanted to exclude all meta keys resembling `_my_awesome_meta_*`, you can pass that in and matching keys will be excluded as well (e.g. `_my_awesome_meta_key`, `_my_awesome_meta_value`, `_my_awesome_meta_1`).
 
 **Parameters**
 
-**`$meta_excludelist` _(array)_ The default exclusion list.
+**`$meta_excludelist`** _(array)_ The default exclusion list.
 
 **Example:**
 ```php
 add_filter( 'duplicate_post_excludelist_filter', function( array $meta_excludelist ) {
-	// Add custom fields to the defaults array.
-	$meta_excludelist[] = 'my_custom_field_1';
-	$meta_excludelist[] = 'my_custom_field_2';
+	// Add all custom fields matching "my_custom_field_" to the excluded array.
+	$meta_excludelist[] = 'my_custom_field_*';
+
+	// Exclude a different, specific meta key.
+	$meta_excludelist[] = '_another_custom_meta';
 
 	return $meta_excludelist;
 } );
