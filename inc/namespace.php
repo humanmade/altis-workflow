@@ -30,6 +30,7 @@ function bootstrap() {
 	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_meta_keys' );
 	add_filter( 'altis.analytics.blocks.override_xb_save_post_hook', __NAMESPACE__ . '\\override_xb_post_update', 10, 2 );
 	add_filter( 'post_row_actions', __NAMESPACE__ . '\\duplicate_post_row_actions', 11, 2 );
+	add_filter( 'display_post_states', __NAMESPACE__ . '\\duplicate_post_override_post_states', 11, 2 );
 }
 
 /**
@@ -299,4 +300,39 @@ function duplicate_post_row_actions( array $actions, WP_Post $post ) : array {
 	ksort( $actions );
 
 	return $actions;
+}
+
+/**
+ * Override the post state for post amendments.
+ *
+ * @param string|array $post_states An array of post display states, if they exist.
+ * @param WP_Post $post The WP_Post object.
+ *
+ * @return string|array The filtered post states.
+ */
+function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
+	$original_post = Utils::get_original( $post );
+
+	if ( ! $original_post ) {
+		return $post_states;
+	}
+
+	if ( ! isset( $post_states['duplicate_post_original_item'] ) ) {
+		return $post_states;
+	}
+
+	$is_amended_post = (bool) get_post_meta( $post->ID, '_dp_is_rewrite_republish_copy', true );
+
+	if ( ! $is_amended_post ) {
+		return $post_states;
+	}
+
+	$original_post_edit_link = get_edit_post_link( $original_post->ID );
+
+	$post_states['duplicate_post_original_item'] = sprintf(
+		__( 'Amendment of %s', 'altis-workflow' ),
+		sprintf( '<a href="%1$s">%2$s</a>', $original_post_edit_link, $original_post->post_title )
+	);
+
+	return $post_states;
 }
