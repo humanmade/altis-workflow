@@ -66,7 +66,7 @@ function load_publication_checklist() {
  * Load Yoast Duplicate Posts, if enabled.
  */
 function load_duplicate_posts() {
-	$config = Altis\get_config()['modules']['workflow']['clone-republish'] ?? null;
+	$config = Altis\get_config()['modules']['workflow']['clone-amend'] ?? null;
 
 	// Bail if Clone & Republish is disabled.
 	if ( ! $config ) {
@@ -96,7 +96,7 @@ function remove_duplicate_post_admin_page() {
  */
 function set_enabled_post_types( array $enabled_post_types ) : array {
 	$public_post_types = get_post_types( [ 'public' => true ], 'names' );
-	$post_types = Altis\get_config()['modules']['workflow']['clone-republish']['post-types'] ?? null;
+	$post_types = Altis\get_config()['modules']['workflow']['clone-amend']['post-types'] ?? null;
 
 	if ( ! $post_types ) {
 		return $public_post_types;
@@ -137,7 +137,7 @@ function filter_duplicate_post_columns() {
  * @return array The filtered array of allowed roles.
  */
 function filter_duplicate_post_roles( $roles ) : array {
-	$roles = Altis\get_config()['modules']['workflow']['clone-republish']['roles'] ?? $roles;
+	$roles = Altis\get_config()['modules']['workflow']['clone-amend']['roles'] ?? $roles;
 
 	return $roles;
 }
@@ -150,7 +150,7 @@ function filter_duplicate_post_roles( $roles ) : array {
  * @return array The filtered array of excluded taxonomies.
  */
 function filter_duplicate_post_excluded_taxonomies( $taxonomies ) : array {
-	$taxonomies = Altis\get_config()['modules']['workflow']['clone-republish']['taxonomies'] ?? [];
+	$taxonomies = Altis\get_config()['modules']['workflow']['clone-amend']['taxonomies'] ?? [];
 
 	return $taxonomies;
 }
@@ -191,7 +191,7 @@ function duplicate_post_update_xb_client_ids( int $new_post_id, WP_Post $post ) 
 	}
 
 	$cloned_post = get_post_meta( $new_post_id, '_dp_original', true );
-	$republished_post = get_post_meta( $new_post_id, '_dp_is_rewrite_republish_copy', true );
+	$amended_post = get_post_meta( $new_post_id, '_dp_is_rewrite_republish_copy', true );
 
 	// Bail if this post hasn't been cloned. All duplicated posts are considered cloned posts.
 	if ( ! $cloned_post ) {
@@ -199,7 +199,7 @@ function duplicate_post_update_xb_client_ids( int $new_post_id, WP_Post $post ) 
 	}
 
 	// Bail if this is a republished post. Only republished posts have both meta keys.
-	if ( $republished_post ) {
+	if ( $amended_post ) {
 		return;
 	}
 

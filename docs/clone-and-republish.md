@@ -1,6 +1,6 @@
-# Clone & Republish
+# Clone & Amend
 
-The Clone & Republish feature of Altis, powered by the [Duplicate Post plugin by Yoast](https://yoast.com/wordpress/plugins/duplicate-post/), adds two powerful features that work together to improve your content management workflows.
+The Clone & Amend feature of Altis, powered by the [Duplicate Post plugin by Yoast](https://yoast.com/wordpress/plugins/duplicate-post/), adds two powerful features that work together to improve your content management workflows.
 
 This feature is enabled by default, but can be disabled by editing the configuration file:
 
@@ -10,7 +10,7 @@ This feature is enabled by default, but can be disabled by editing the configura
 		"altis": {
 			"modules": {
 				"workflow": {
-					"clone-republish": false
+					"clone-amend": false
 				}
 			}
 		}
@@ -30,11 +30,11 @@ This feature adds a link to the post list screen that allows a user to clone a p
 
 Posts can have multiple concurrent drafts with the New Draft feature. Clicking New Draft will create a new duplicate copy of the original post that can be edited independently of the original. Publishing a post that was created with the New Draft works the same as publishing any other new post, with the exception that the original post will be linked from the New Draft copy in the admin. This reference is functionally the same as the reference in a cloned post.
 
-## Rewrite & Republish
+## Amendments
 
-Posts that have been published have the ability to be edited, saved as a draft, revised and republished without affecting the published post with the Rewrite & Republish link. This link does not appear on posts that are drafts or are themselves clones or republished posts. In other words, while you may click Rewrite & Republish to create multiple draft copies of an originating post, you cannot Rewrite & Republish a post that is a copy of that post.
+Posts that have been published have the ability to be edited, saved as a draft, revised and republished without affecting the published post with the Amendments link. This link does not appear on posts that are drafts or are themselves clones or republished posts. In other words, while you may click Amendments to create multiple draft copies of an originating post, you cannot Amendments a post that is a copy of that post.
 
-When you click the link to Rewrite & Republish a post, a cloned version of that post is created for you to edit. When you have completed your edits and are ready to publish, the content from the updated copy _replaces_ the original post content and the duplicate is deleted. In this way, it is unique from the Clone and New Draft features which can create a copy but do not replace the original.
+When you click the link to Amendments a post, a cloned version of that post is created for you to edit. When you have completed your edits and are ready to publish, the content from the updated copy _replaces_ the original post content and the duplicate is deleted. In this way, it is unique from the Clone and New Draft features which can create a copy but do not replace the original.
 
 ## Enabled Post Types
 
@@ -56,11 +56,11 @@ The post cloning, new draft and rewrite & republish features are enabled for all
 }
 ```
 
-The example above enables the Clone & Republish features on the `page` and `product` post types only. In this case, those features would _not_ be available for the `post` post type or other publicly available post types.
+The example above enables the Clone & Amend features on the `page` and `product` post types only. In this case, those features would _not_ be available for the `post` post type or other publicly available post types.
 
 ## Allowed Roles
 
-By default, the only roles able to use any of the Clone & Republish actions are site Editors and Administrators, but this can be changed in the config.
+By default, the only roles able to use any of the Clone & Amend actions are site Editors and Administrators, but this can be changed in the config.
 
 ```json
 {
