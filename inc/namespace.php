@@ -23,6 +23,7 @@ function bootstrap() {
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_duplicate_post_admin_page', 99 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_post_columns', 1000 );
 	add_action( 'duplicate_post_post_copy', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids', 10, 2 );
+	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_posts_bulk_actions' );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\set_enabled_post_types' );
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
@@ -247,4 +248,21 @@ function override_xb_post_update( bool $default, int $post_id ) : bool {
 	}
 
 	return $default;
+}
+
+/**
+ * Filter the Duplicate Posts available bulk actions.
+ */
+function filter_duplicate_posts_bulk_actions() {
+	// Get the enabled duplicate post post types.
+	$duplicate_post_types = get_duplicate_post_types();
+
+	// Loop through and filter the bulk actions for each enabled post type.
+	foreach ( $duplicate_post_types as $post_type ) {
+		add_filter( "bulk_actions-edit-$post_type", function( $actions ) {
+			$actions['duplicate_post_bulk_rewrite_republish'] = __( 'Create Amendments', 'altis-workflow' );
+
+			return $actions;
+		}, 11 );
+	}
 }
