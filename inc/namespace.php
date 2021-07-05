@@ -29,6 +29,7 @@ function bootstrap() {
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
 	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_meta_keys' );
 	add_filter( 'altis.analytics.blocks.override_xb_save_post_hook', __NAMESPACE__ . '\\override_xb_post_update', 10, 2 );
+	add_filter( 'post_row_actions', __NAMESPACE__ . '\\duplicate_post_row_actions', 11, 2 );
 }
 
 /**
@@ -265,4 +266,37 @@ function filter_duplicate_posts_bulk_actions() {
 			return $actions;
 		}, 11 );
 	}
+}
+
+/**
+ * Override the Duplicate Post row actions and microcopy.
+ *
+ * @param array $actions The array of post row actions.
+ * @param WP_Post $post The WP_Post object.
+ *
+ * @return array The filtered array of post row actions.
+ */
+function duplicate_post_row_actions( array $actions, WP_Post $post ) : array {
+	// If this is a rewritten post, change the edit link.
+	if ( get_post_meta( $post->ID, '_dp_is_rewrite_republish_copy', true ) ) {
+		$actions['edit'] = str_replace( __( 'Edit' ), __( 'Edit Amendment', 'altis-workflow' ), $actions['edit'] );
+	}
+
+	// Remove the clone action.
+	unset( $actions['clone'] );
+
+	// Rename the New Draft action to Clone.
+	if ( isset( $actions['edit_as_new_draft'] ) ) {
+		$actions['edit_as_new_draft'] = str_replace( __( 'New Draft', 'duplicate-post' ), __( 'Clone', 'altis-workflow' ), $actions['edit_as_new_draft'] );
+	}
+
+	// Change Rewrite & Republish to Create Amendment.
+	if ( isset( $actions['rewrite'] ) ) {
+		$actions['rewrite'] = str_replace( __( 'Rewrite &amp; Republish', 'duplicate-post' ), __( 'Create Amendment', 'altis-workflow' ), $actions['rewrite'] );
+	}
+
+	// Re-sort the actions.
+	ksort( $actions );
+
+	return $actions;
 }
