@@ -5,7 +5,7 @@
     "require": {
         "php": ">=7.1",
         "humanmade/workflows": "~0.3.11",
-        "humanmade/publication-checklist": "~0.2.0"
+        "humanmade/publication-checklist": "~0.3.0"
     },
     "license": "GPL-3.0",
     "authors": [
