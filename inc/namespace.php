@@ -8,6 +8,7 @@
 namespace Altis\Workflow;
 
 use Altis;
+use Asset_Loader;
 use WP_Post;
 use Yoast\WP\Duplicate_Post\Utils;
 
@@ -24,6 +25,7 @@ function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_post_columns', 1000 );
 	add_action( 'duplicate_post_post_copy', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids', 10, 2 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_posts_bulk_actions' );
+	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\override_duplicate_post_strings', 11 );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\set_enabled_post_types' );
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
@@ -335,4 +337,16 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 	);
 
 	return $post_states;
+}
+
+function override_duplicate_post_strings() {
+	$handle = 'altis-duplicate-post-strings';
+	Asset_Loader\enqueue_asset(
+		dirname( __FILE__, 2 ) . '/build/production-asset-manifest.json',
+		'scripts.js',
+		[
+			'handle' => $handle,
+			'dependencies' => [ 'wp-components', 'wp-element', 'wp-i18n']
+		]
+	);
 }
