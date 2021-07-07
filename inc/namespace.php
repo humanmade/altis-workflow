@@ -11,6 +11,7 @@ use Altis;
 use Asset_Loader;
 use WP_Post;
 use Yoast\WP\Duplicate_Post\Utils;
+use Yoast\WP\Duplicate_Post\UI\Link_Builder;
 
 /**
  * Bootstrap Workflow module.
@@ -341,6 +342,10 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 
 /**
  * Override the duplicate post strings.
+ *
+ * For all posts, enqueue javascript that replaces the Duplicate Post render function with our own render function with updated strings.
+ *
+ * For rewrite & republished (amended) posts, we continue and replace all the strings provided by Duplicate Post with our versions.
  */
 function override_duplicate_post_strings() {
 	$handle = 'altis-duplicate-post-strings';
