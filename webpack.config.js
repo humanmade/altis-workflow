@@ -4,7 +4,8 @@ const { filePath } = helpers;
 module.exports = presets.production( {
 	externals,
 	entry: {
-		scripts: filePath( 'assets/scripts.js' ),
+		"republish-strings": filePath( 'assets/republish-strings.js' ),
+		"register-amend-post": filePath( 'assets/register-amend-post.js' ),
 	},
 	output: {
 		path: filePath( 'build' ),
