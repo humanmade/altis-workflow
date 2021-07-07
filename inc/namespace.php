@@ -339,6 +339,9 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 	return $post_states;
 }
 
+/**
+ * Override the duplicate post strings.
+ */
 function override_duplicate_post_strings() {
 	$handle = 'altis-duplicate-post-strings';
 	Asset_Loader\enqueue_asset(
