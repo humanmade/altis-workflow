@@ -1,0 +1,28 @@
+on:
+  create:
+    repository_dispatch:
+      types: [release]
+
+  name: Create Release
+
+  jobs:
+    release:
+      name: Create Release
+      runs-on: ubuntu-latest
+      steps:
+        - name: Get the version
+          id: get_version
+          run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        - name: Create Release
+        uses: technote-space/release-github-actions@v2
+        with:
+          CLEAN_TEST_TAG: true
+          CLEAN_TARGETS: .[!.]*,package.json,node_modules,webpack.config.js,assets
+          COMMIT_MESSAGE: "Built release for ${{ steps.get_version.outputs.VERSION }}. For a full changelog, see the release notes for ${{ steps.get_version.outputs.VERSION }}."
+          CREATE_MAJOR_VERSION_TAG: false
+          CREATE_MINOR_VERSION_TAG: false
+          CREATE_PATCH_VERSION_TAG: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORIGINAL_TAG_PREFIX: original/
+          OUTPUT_BUILD_INFO_FILENAME: build.json
+          TEST_TAG_PREFIX: test/

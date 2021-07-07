@@ -1,0 +1,69 @@
+name: CI Build
+on:
+  push:
+    branches:
+      - '*'
+      - '!gh-actions'
+
+  jobs:
+    build:
+      name: Build
+      strategy:
+        matrix:
+          php: [7.4]
+          node: [12.9.1]
+      runs-on: ubuntu-latest
+      timeout-minutes: 10
+      container:
+        image: php:${{ matrix.php }}-apache
+        env:
+          NODE_ENV: development
+        ports:
+        - 80
+        volumes:
+        - ${{ github.workspace }}://var/www/html
+      steps:
+      - name: Set up container
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          echo "Update package lists"
+          apt-get -y update
+          echo "Install base packages"
+          apt-get -y --allow-downgraded --allow-remove-essential --allow-change-held-packages -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew install --fix-missing --fix-broken build-essential libssl-dev gnupg libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libicu-dev libxml2-dev libonig-dev vim wget unzip git
+          echo "Install NVM"
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+          . ~/.nvm/nvm.sh
+          echo "Install node"
+          nvm install ${{ matrix.node }}
+          nvm use ${{ matrix.node }}
+          echo "Install composer"
+          curl -sS https://getcomposer.org/installer | php -- --filename=composer.phar --version=1.10.20
+          mv composer.phar /usr/local/bin/composer
+          echo "Install PHP extensions"
+          docker-php-ext-install -j$(nproc) iconv intl xml soap opcache pdo
+      - name: Checkout repository
+        uses: actions/checkout@v1
+        with:
+          ref: ${{ github.ref }}
+      - name: Setup composer vendor folder cache
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+      - name: Setup node_modules folder cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Run NPM install
+        run: |
+          npm install
+      - name: Run composer validate
+        run: |
+          composer validate
+      - name: Run composer install
+        run: |
+          composer install --prefer-dist --no-progress --no-suggest
+      - name: Run npm build
+        run: |
+          npm run build
