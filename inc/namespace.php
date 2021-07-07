@@ -348,13 +348,57 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
  * For rewrite & republished (amended) posts, we continue and replace all the strings provided by Duplicate Post with our versions.
  */
 function override_duplicate_post_strings() {
-	$handle = 'altis-duplicate-post-strings';
+	$post = get_post();
+	$asset_manifest = dirname( __FILE__, 2 ) . '/build/production-asset-manifest.json';
+	$dependencies = [ 'wp-components', 'wp-element', 'wp-i18n'];
+	$handle = 'register-amend-post';
+	$linkify = new Link_Builder;
+	$new_draft_link = $linkify->build_new_draft_link( $post );
+	$amend_link = $linkify->build_rewrite_and_republish_link( $post );
+
+	$strings = [
+		'amendLink' => $amend_link,
+		'newDraftLink' => $new_draft_link,
+		'clonePost' => __( 'Clone post', 'altis-workflow' ),
+		'amendPost' => __( 'Create amendment', 'altis-workflow' )
+	];
+
 	Asset_Loader\enqueue_asset(
-		dirname( __FILE__, 2 ) . '/build/production-asset-manifest.json',
-		'scripts.js',
+		$asset_manifest,
+		'register-amend-post.js',
 		[
 			'handle' => $handle,
-			'dependencies' => [ 'wp-components', 'wp-element', 'wp-i18n']
+			'dependencies' => $dependencies,
 		]
 	);
+
+	wp_localize_script( $handle, 'altisAmendPost', $strings );
+
+	// If this isn't a rewritten/amended post, we're done now.
+	if ( ! get_post_meta( $post->ID, '_dp_is_rewrite_republish_copy', true ) ) {
+		return;
+	}
+
+	$strings = [
+		'publish' => __( 'Publish Amendment', 'altis-workflow' ),
+		'publishColon' => __( 'Publish Amendment:', 'altis-workflow' ),
+		'publishOn:' => __( 'Publish Amendment on:', 'altis-workflow' ),
+		'readyToPublish' => __( 'Are you ready to publish your amendment?', 'altis-workflow' ),
+		'schedule' => __( 'Schedule amendment', 'altis-workflow' ),
+		'scheduleEllipses' => __( 'Schedule amendment…', 'altis-workflow' ),
+		'readyToSchedule' => __( 'Are you ready to schedule publishing the amendments to your post?', 'altis-workflow' ),
+		'nowScheduled' => __( ', the amended post, is now scheduled to replace the original post. It will be published on', 'altis-workflow' ),
+	];
+
+	$handle = 'altis-republish-strings';
+	Asset_Loader\enqueue_asset(
+		$asset_manifest,
+		'republish-strings.js',
+		[
+			'handle' => $handle,
+			'dependencies' => $dependencies,
+		]
+	);
+
+	wp_localize_script( $handle, 'altisRepublishStrings', $strings );
 }
