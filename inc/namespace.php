@@ -27,6 +27,7 @@ function bootstrap() {
 	add_action( 'duplicate_post_post_copy', __NAMESPACE__ . '\\duplicate_post_update_xb_client_ids', 10, 2 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_posts_bulk_actions' );
 	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\override_duplicate_post_strings', 11 );
+	add_action( 'wp_before_admin_bar_render', __NAMESPACE__ . '\\replace_duplicate_post_admin_menu', 11 );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\set_enabled_post_types' );
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
@@ -402,4 +403,65 @@ function override_duplicate_post_strings() {
 	);
 
 	wp_localize_script( $handle, 'altisRepublishStrings', $strings );
+}
+
+/**
+ * Remove and replace the Duplicate Post admin bar.
+ *
+ * Add our own Clone & Amend admin bar where applicable.
+ */
+function replace_duplicate_post_admin_menu() {
+	global $wp_admin_bar;
+
+	// Bail if the admin bar is turned off.
+	if ( ! is_admin_bar_showing() ) {
+		return;
+	}
+
+	// Don't show the options outside of the admin.
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	$post = get_post();
+
+	// Don't show the menu if we're not on a post page.
+	if ( ! $post ) {
+		return;
+	}
+
+	// Bail on unsupported post types.
+	if ( ! in_array( $post->post_type, get_duplicate_post_types(), true ) ) {
+		return;
+	}
+
+	$is_amended_post = (bool) get_post_meta( $post->ID, '_dp_is_rewrite_republish_copy', 'true' );
+	$top_level_menu = $is_amended_post ? __( 'Clone Post', 'altis-workflow' ) : __( 'Clone & Amend', 'altis-workflow' );
+	$linkify = new Link_Builder;
+
+	// Remove the duplicate post admin bar.
+	$wp_admin_bar->remove_menu( 'duplicate-post' );
+
+	// Add a new admin bar.
+	$wp_admin_bar->add_menu( [
+		'id'    => 'clone-amend',
+		'title' => '<span class="ab-label">' . $top_level_menu . '</span>',
+		'href'  => $linkify->build_new_draft_link( $post ),
+	] );
+
+	// Don't display an additional Clone Post menu item or a Create Amendment link if the post is an amendment.
+	if ( ! $is_amended_post ) {
+		$wp_admin_bar->add_menu( [
+			'id'     => 'new-draft',
+			'parent' => 'clone-amend',
+			'title'  => __( 'Clone Post', 'altis-workflow' ),
+			'href'   => $linkify->build_new_draft_link( $post ),
+		] );
+		$wp_admin_bar->add_menu( [
+			'id'     => 'rewrite-republish',
+			'parent' => 'clone-amend',
+			'title'  => __( 'Create Amendment', 'altis-workflow' ),
+			'href'   => $linkify->build_rewrite_and_republish_link( $post ),
+		] );
+	}
 }
