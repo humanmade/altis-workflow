@@ -284,6 +284,11 @@ function filter_duplicate_posts_bulk_actions() {
  * @return array The filtered array of post row actions.
  */
 function duplicate_post_row_actions( array $actions, WP_Post $post ) : array {
+	// Bail if we're in an unsupported post type.
+	if ( ! in_array( $post->post_type, get_duplicate_post_types(), true ) ) {
+		return $actions;
+	}
+
 	// If this is a rewritten post, change the edit link.
 	if ( get_post_meta( $post->ID, '_dp_is_rewrite_republish_copy', true ) ) {
 		$actions['edit'] = str_replace( __( 'Edit' ), __( 'Edit Amendment', 'altis-workflow' ), $actions['edit'] );
