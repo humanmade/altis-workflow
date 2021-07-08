@@ -28,6 +28,7 @@ function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\filter_duplicate_posts_bulk_actions' );
 	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\override_duplicate_post_strings', 11 );
 	add_action( 'wp_before_admin_bar_render', __NAMESPACE__ . '\\replace_duplicate_post_admin_menu', 11 );
+	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\replace_amended_post_notice', 11 );
 	add_filter( 'duplicate_post_enabled_post_types', __NAMESPACE__ . '\\set_enabled_post_types' );
 	add_filter( 'pre_option_duplicate_post_roles', __NAMESPACE__ . '\\filter_duplicate_post_roles' );
 	add_filter( 'pre_option_duplicate_post_taxonomies_blacklist', __NAMESPACE__ . '\\filter_duplicate_post_excluded_taxonomies' );
@@ -464,4 +465,29 @@ function replace_duplicate_post_admin_menu() {
 			'href'   => $linkify->build_rewrite_and_republish_link( $post ),
 		] );
 	}
+}
+
+/**
+ * Override the Rewrite & Republish post notice.
+ * Replace with our own notice with updated microcopoy.
+ */
+function replace_amended_post_notice() {
+	// Bail if not rewriting/amending a post.
+	if ( empty( $_REQUEST['rewriting'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+
+	// Update the notice text.
+	$notice = [
+		'text' => wp_slash( __( 'You can now start making changes to your post in this duplicate of the original post. When you click "Publish Amendment", this updated version of the post will replace the original post.', 'altis-workflow' ) ),
+		'status' => 'warning',
+		'isDismissible' => true,
+	];
+
+	// Add it to the duplicate_post_edit_script.
+	wp_add_inline_script(
+		'duplicate_post_edit_script',
+		"duplicatePostNotices.rewriting_notice = '" . \wp_json_encode( $notice ) . "';",
+		'before'
+	);
 }
