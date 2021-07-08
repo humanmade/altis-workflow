@@ -323,7 +323,6 @@ function duplicate_post_row_actions( array $actions, WP_Post $post ) : array {
  */
 function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 	$original_post = Utils::get_original( $post );
-
 	if ( ! $original_post ) {
 		return $post_states;
 	}
@@ -339,6 +338,10 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 	}
 
 	$original_post_edit_link = get_edit_post_link( $original_post->ID );
+
+	if ( isset( $post_states[0] ) && $post_states[0] === 'Customization Draft' ) {
+		$post_states[0] = __( 'Draft' );
+	}
 
 	$post_states['duplicate_post_original_item'] = sprintf(
 		__( 'Amendment of %s', 'altis-workflow' ),
