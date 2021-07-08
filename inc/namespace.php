@@ -33,6 +33,7 @@ function bootstrap() {
 	add_filter( 'duplicate_post_excludelist_filter', __NAMESPACE__ . '\\exclude_meta_keys' );
 	add_filter( 'altis.analytics.blocks.override_xb_save_post_hook', __NAMESPACE__ . '\\override_xb_post_update', 10, 2 );
 	add_filter( 'post_row_actions', __NAMESPACE__ . '\\duplicate_post_row_actions', 11, 2 );
+	add_filter( 'page_row_actions', __NAMESPACE__ . '\\duplicate_post_row_actions', 11, 2 );
 	add_filter( 'display_post_states', __NAMESPACE__ . '\\duplicate_post_override_post_states', 11, 2 );
 }
 
