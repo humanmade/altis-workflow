@@ -1,4 +1,5 @@
-import { setLocaleData } from "@wordpress/i18n";
+/* global altisRepublishStrings */
+import { setLocaleData } from '@wordpress/i18n';
 const republishStrings = {
 	'Publish': altisRepublishStrings.publish,
 	'Publish:': altisRepublishStrings.publishColon,
