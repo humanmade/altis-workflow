@@ -17,9 +17,9 @@ registerPlugin( 'altis-amend-post', {
 				{ ( altisAmendPost.newDraftLink !== '' ) &&
 					<PluginPostStatusInfo>
 						<Button
-							isTertiary={ true }
 							className="dp-editor-post-copy-to-draft"
 							href={ altisAmendPost.newDraftLink }
+							isTertiary={ true }
 						>
 							{ altisAmendPost.clonePost }
 						</Button>
@@ -28,9 +28,9 @@ registerPlugin( 'altis-amend-post', {
 				{ ( currentPostStatus === 'publish' && altisAmendPost.amendLink !== '' ) &&
 					<PluginPostStatusInfo>
 						<Button
-							isTertiary={ true }
 							className="dp-editor-post-rewrite-republish"
 							href={ altisAmendPost.amendLink }
+							isTertiary={ true }
 						>
 							{ altisAmendPost.amendPost }
 						</Button>
