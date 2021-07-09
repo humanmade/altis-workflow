@@ -40,5 +40,5 @@ registerPlugin( 'altis-amend-post', {
 				}
 			</Fragment>
 		);
-	}
+	},
 } );
