@@ -1,8 +1,8 @@
-import { registerPlugin, unregisterPlugin } from "@wordpress/plugins";
-import { PluginPostStatusInfo } from "@wordpress/edit-post";
-import { Fragment } from "@wordpress/element";
 import { Button } from '@wordpress/components';
-import { select } from "@wordpress/data";
+import { select } from '@wordpress/data';
+import { PluginPostStatusInfo } from '@wordpress/edit-post';
+import { Fragment } from '@wordpress/element';
+import { registerPlugin, unregisterPlugin } from '@wordpress/plugins';
 
 unregisterPlugin( 'duplicate-post' );
 registerPlugin( 'altis-amend-post', {
