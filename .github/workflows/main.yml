@@ -42,6 +42,13 @@ jobs:
         mv composer.phar /usr/local/bin/composer
         echo "Install PHP extensions"
         docker-php-ext-install -j$(nproc) iconv intl xml soap opcache pdo
+    - name: Install Node
+      uses: actions/checkout@v2
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12.9.1'
+    - run: npm install
+    - run: npm test
     - name: Checkout repository
       uses: actions/checkout@v1
       with:
