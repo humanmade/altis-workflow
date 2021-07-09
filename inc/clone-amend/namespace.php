@@ -311,7 +311,7 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 function override_duplicate_post_strings() {
 	$post = get_post();
 	$asset_manifest = dirname( __FILE__, 3 ) . '/build/production-asset-manifest.json';
-	$dependencies = [ 'wp-components', 'wp-element', 'wp-i18n'];
+	$dependencies = [ 'wp-components', 'wp-element', 'wp-i18n' ];
 	$handle = 'register-amend-post';
 	$linkify = new Link_Builder;
 	$new_draft_link = $linkify->build_new_draft_link( $post );
