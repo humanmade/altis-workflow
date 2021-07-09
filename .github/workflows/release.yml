@@ -1,19 +1,19 @@
 on:
   create:
-    repository_dispatch:
-      types: [release]
+  repository_dispatch:
+    types: [release]
 
-  name: Create Release
+name: Create Release
 
-  jobs:
-    release:
-      name: Create Release
-      runs-on: ubuntu-latest
-      steps:
-        - name: Get the version
-          id: get_version
-          run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-        - name: Create Release
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Create Release
         uses: technote-space/release-github-actions@v2
         with:
           CLEAN_TEST_TAG: true
