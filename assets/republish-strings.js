@@ -16,7 +16,7 @@ for ( const original in republishStrings ) {
 	setLocaleData( {
 		[ original ]: [
 			republishStrings[ original ],
-			'duplicate-post'
-		]
+			'duplicate-post',
+		],
 	} );
 }
