@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '@wordpress/components';
 import { select } from '@wordpress/data';
 import { PluginPostStatusInfo } from '@wordpress/edit-post';
