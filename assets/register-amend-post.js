@@ -14,7 +14,8 @@ registerPlugin( 'altis-amend-post', {
 
 		return (
 			<Fragment>
-				{ ( altisAmendPost.newDraftLink !== '' ) &&
+				{
+					( altisAmendPost.newDraftLink !== '' ) &&
 					<PluginPostStatusInfo>
 						<Button
 							className="dp-editor-post-copy-to-draft"
@@ -25,7 +26,8 @@ registerPlugin( 'altis-amend-post', {
 						</Button>
 					</PluginPostStatusInfo>
 				}
-				{ ( currentPostStatus === 'publish' && altisAmendPost.amendLink !== '' ) &&
+				{
+					( currentPostStatus === 'publish' && altisAmendPost.amendLink !== '' ) &&
 					<PluginPostStatusInfo>
 						<Button
 							className="dp-editor-post-rewrite-republish"
