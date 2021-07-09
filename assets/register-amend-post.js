@@ -1,7 +1,6 @@
 /* global altisAmendPost */
 
 import React from 'react';
-
 import { Button } from '@wordpress/components';
 import { select } from '@wordpress/data';
 import { PluginPostStatusInfo } from '@wordpress/edit-post';
@@ -15,21 +14,26 @@ registerPlugin( 'altis-amend-post', {
 
 		return (
 			<Fragment>
-				{ altisAmendPost.newDraftLink &&
+				{ ( altisAmendPost.newDraftLink !== '' ) &&
 					<PluginPostStatusInfo>
 						<Button
 							className="dp-editor-post-copy-to-draft"
 							href={ altisAmendPost.newDraftLink }
-							isTertiary={ true }
-						>{ altisAmendPost.clonePost }</Button>
+							isTertiary
+						>
+							{ altisAmendPost.clonePost }
+						</Button>
 					</PluginPostStatusInfo>
-				} { ( currentPostStatus === 'publish' && altisAmendPost.amendLink ) &&
+				}
+				{ ( currentPostStatus === 'publish' && altisAmendPost.amendLink !== '' ) &&
 					<PluginPostStatusInfo>
 						<Button
 							className="dp-editor-post-rewrite-republish"
 							href={ altisAmendPost.amendLink }
-							isTertiary={ true }
-						>{ altisAmendPost.amendPost }</Button>
+							isTertiary
+						>
+							{ altisAmendPost.amendPost }
+						</Button>
 					</PluginPostStatusInfo>
 				}
 			</Fragment>
