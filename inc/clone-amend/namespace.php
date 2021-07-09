@@ -321,7 +321,7 @@ function override_duplicate_post_strings() {
 		'amendLink' => $amend_link,
 		'newDraftLink' => $new_draft_link,
 		'clonePost' => __( 'Clone post', 'altis-workflow' ),
-		'amendPost' => __( 'Create amendment', 'altis-workflow' )
+		'amendPost' => __( 'Create amendment', 'altis-workflow' ),
 	];
 
 	Asset_Loader\enqueue_asset(
