@@ -23,8 +23,7 @@ registerPlugin( 'altis-amend-post', {
 							isTertiary={ true }
 						>{ altisAmendPost.clonePost }</Button>
 					</PluginPostStatusInfo>
-				}
-				{ ( currentPostStatus === 'publish' && altisAmendPost.amendLink ) &&
+				} { ( currentPostStatus === 'publish' && altisAmendPost.amendLink ) &&
 					<PluginPostStatusInfo>
 						<Button
 							className="dp-editor-post-rewrite-republish"
