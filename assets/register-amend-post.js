@@ -20,9 +20,7 @@ registerPlugin( 'altis-amend-post', {
 							className="dp-editor-post-copy-to-draft"
 							href={ altisAmendPost.newDraftLink }
 							isTertiary={ true }
-						>
-							{ altisAmendPost.clonePost }
-						</Button>
+						>{ altisAmendPost.clonePost }</Button>
 					</PluginPostStatusInfo>
 				}
 				{ ( currentPostStatus === 'publish' && altisAmendPost.amendLink !== '' ) &&
@@ -31,9 +29,7 @@ registerPlugin( 'altis-amend-post', {
 							className="dp-editor-post-rewrite-republish"
 							href={ altisAmendPost.amendLink }
 							isTertiary={ true }
-						>
-							{ altisAmendPost.amendPost }
-						</Button>
+						>{ altisAmendPost.amendPost }</Button>
 					</PluginPostStatusInfo>
 				}
 			</Fragment>
