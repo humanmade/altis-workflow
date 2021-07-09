@@ -430,8 +430,8 @@ function replace_duplicate_post_admin_menu() {
  * Replace with our own notice with updated microcopoy.
  */
 function replace_amended_post_notice() {
-	$rewriting = ! empty( $_REQUEST['rewriting'] );
-	$republished = ! empty( $_REQUEST['dprepublished'] );
+	$rewriting = ! empty( $_REQUEST['rewriting'] ); // phpcs:ignore WordPress.Security.NonceVerification
+	$republished = ! empty( $_REQUEST['dprepublished'] ); // phpcs:ignore WordPress.Security.NonceVerification
 
 	// Bail if not rewriting/amending a post.
 	if ( ! $rewriting && ! $republished ) { // phpcs:ignore WordPress.Security.NonceVerification
