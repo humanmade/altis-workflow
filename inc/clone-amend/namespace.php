@@ -12,8 +12,8 @@ namespace Altis\Workflow\Clone_Amend;
 use Altis;
 use Asset_Loader;
 use WP_Post;
-use Yoast\WP\Duplicate_Post\Utils;
 use Yoast\WP\Duplicate_Post\UI\Link_Builder;
+use Yoast\WP\Duplicate_Post\Utils;
 
 /**
  * Kick everything off.
