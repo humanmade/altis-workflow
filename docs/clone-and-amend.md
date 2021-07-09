@@ -18,27 +18,53 @@ This feature is enabled by default, but can be disabled by editing the configura
 }
 ```
 
-![Quick Action row options](./assets/duplicate-post-list.png)
+![Quick Action row options](./assets/clone-amend-post-list.png)
 
 ## Post Cloning
 
-This feature adds a link to the post list screen that allows a user to clone a post with its metadata and terms to a new, identical post. This duplicate post will automatically link back to the original post but this reference can be removed by editing the post and checking the "Delete reference to original item" checkbox in the Duplicate Post panel in the editor.
+This feature adds a link to the post list screen that allows a user to clone a post with its metadata and terms to a new, identical post that can be edited independently of the original. This duplicate post will automatically link back to the original post but this reference can be removed by editing the post and checking the "Delete reference to original item" checkbox in the Duplicate Post panel in the editor.
 
 ![Duplicate post delete reference panel](./assets/duplicate-post-delete-reference.png)
 
-## New Draft
-
-Posts can have multiple concurrent drafts with the New Draft feature. Clicking New Draft will create a new duplicate copy of the original post that can be edited independently of the original. Publishing a post that was created with the New Draft works the same as publishing any other new post, with the exception that the original post will be linked from the New Draft copy in the admin. This reference is functionally the same as the reference in a cloned post.
-
 ## Amendments
 
-Posts that have been published have the ability to be edited, saved as a draft, revised and republished without affecting the published post with the Amendments link. This link does not appear on posts that are drafts or are themselves clones or republished posts. In other words, while you may click Amendments to create multiple draft copies of an originating post, you cannot Amendments a post that is a copy of that post.
+With the Create Amendment feature, you can edit posts that have been published, save those changes in a draft and schedule or publish those changes to go live whenever you like. Posts that are in a draft status or are themselves an amendment of an existing post cannot be amended. In other words, while you may click Create Amendment to create multiple draft copies of an originating post, you cannot create an Amendment an Amendment.
 
-When you click the link to Amendments a post, a cloned version of that post is created for you to edit. When you have completed your edits and are ready to publish, the content from the updated copy _replaces_ the original post content and the duplicate is deleted. In this way, it is unique from the Clone and New Draft features which can create a copy but do not replace the original.
+![Amended post quick action row items](./assets/clone-amend-amendment-post-list.png)
+
+When you click the link to Create Amendment, a cloned version of that post is created for you to edit. When you have completed your edits and are ready to publish, the content from the updated copy _replaces_ the original post content and the duplicate is deleted. In this way, it is unique from the Clone Post feature which creates a copy but does not replace the original.
+
+![Editing an amended post](./assets/clone-amend-edit-amendment.png)
+
+When you are ready to publish your changes, clicking Publish Amendment will open a dialog that asks to confirm that you are ready and that your changes will _overwrite_ the existing post content. From here you can choose to continue to publish or save your changes and view the difference between the two posts.
+
+![Publish amendment confirmation dialog](./assets/clone-amend-are-you-sure.png)
+
+Post amendments can also be scheduled. In the edit post sidebar or under the publication checklist, next to Publish Amendment you can choose the date for your amendment to go live. By default, the original publish date is retained, but you may schedule the post to publish on a future date and, in that case, the amended version will be merged with the original post on that future date.
+
+![Schedule an amendment](./assets/clone-amend-schedule.png)
+
+When you are ready to publish, clicking Publish Amendment and confirming in the Publish dialog will overwrite the original post with your amended version and create a revision in the WordPress revision history.
+
+![Successfully published an amendment](./assets/clone-amend-success.png)
+
+Under the hood, the original post content is replaced with that of the duplicate, amended post which is then deleted after the content has been merged.
+
+## Bulk Actions and Admin Menu Bar Items
+
+The Duplicate Post plugin adds bulk actions and new WP Admin menu bar actions to the WordPress admin.
+
+Selecting multiple posts from the post list, you can create copies or amendments of each by using the Clone or Create Amendments actions in the Bulk Actions dropdown menu. If either are selected and the Apply button is clicked, duplicate copies (either clones or amendments) will be made of the selected posts.
+
+![Duplicate Post bulk actions](./assets/clone-amend-bulk-actions.png)
+
+When you are editing a post, the admin bar will be updated to include a Clone & Amend dropdown. Within this dropdown, you can clone the current post or create an amendment. If you are currently editing a post amendment, the only additional menu item that appears will be to clone the current amended post.
+
+![Clone & Amend admin menu item](./assets/clone-amend-admin-menu-item.png)
 
 ## Enabled Post Types
 
-The post cloning, new draft and rewrite & republish features are enabled for all public post types by default. You can modify this behavior by passing the post types you want to enable these features on to the `altis.modules.workflow.clone-republish.post-types` configuration option.
+The post cloning and post amendments features are enabled for all public post types by default. You can modify this behavior by passing the post types you want to enable these features on to the `altis.modules.workflow.clone-republish.post-types` configuration option.
 
 ```json
 {
@@ -226,6 +252,6 @@ Returns the original post of the requested post/post ID, either as a post object
 **Example:**
 ```php
 $original_post = duplicate_post_get_original( $cloned_post_id, ARRAY_A );
-``
+```
 
 For full documentation on available [template tags](https://developer.yoast.com/duplicate-post/functions-template-tags) and [action and filter hooks](https://developer.yoast.com/duplicate-post/filters-actions), go to the [Yoast Duplicate Post developer documentation site](https://developer.yoast.com/duplicate-post/overview).
