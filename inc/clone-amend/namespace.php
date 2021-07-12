@@ -316,6 +316,7 @@ function override_duplicate_post_strings() {
 	$linkify = new Link_Builder;
 	$new_draft_link = $linkify->build_new_draft_link( $post );
 	$amend_link = $linkify->build_rewrite_and_republish_link( $post );
+	$check_link = $linkify->build_check_link( $post );
 
 	$strings = [
 		'amendLink' => $amend_link,
@@ -349,6 +350,7 @@ function override_duplicate_post_strings() {
 		'scheduleEllipses' => __( 'Schedule amendment…', 'altis-workflow' ),
 		'readyToSchedule' => __( 'Are you ready to schedule publishing the amendments to your post?', 'altis-workflow' ),
 		'nowScheduled' => __( ', the amended post, is now scheduled to replace the original post. It will be published on', 'altis-workflow' ),
+		'checkLink' => $check_link,
 	];
 
 	$handle = 'altis-republish-strings';
