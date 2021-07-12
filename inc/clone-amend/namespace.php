@@ -350,6 +350,8 @@ function override_duplicate_post_strings() {
 		'scheduleEllipses' => __( 'Schedule amendment…', 'altis-workflow' ),
 		'readyToSchedule' => __( 'Are you ready to schedule publishing the amendments to your post?', 'altis-workflow' ),
 		'nowScheduled' => __( ', the amended post, is now scheduled to replace the original post. It will be published on', 'altis-workflow' ),
+		'changesMerged' => __( 'After clicking Publish Amendment, your changes will be merged into the original post and you\'ll be redirected there.<br /><br />Do you want to compare your changes with the original version before merging?<br /><br /><button>Save changes and compare</button>', 'altis-workflow' ),
+		'scheduledCheck' => __( 'You\'re about to replace the original post with this amended post at the specified date and time.<br /><br />Do you want to compare your changes with the original version before publishing?<br /><br /><button>Save changes and compare</button>', 'altis-workflow' ),
 		'checkLink' => $check_link,
 	];
 
