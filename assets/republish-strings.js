@@ -92,6 +92,20 @@ const republishStrings = {
 	'post action/button label\u0004Schedule': altisRepublishStrings.schedule,
 	'Are you ready to schedule?': altisRepublishStrings.readyToSchedule,
 	'is now scheduled. It will go live on': altisRepublishStrings.nowScheduled,
+	'Double-check your settings before publishing.': createInterpolateElement(
+		altisRepublishStrings.changesMerged,
+		{
+			button: <Button isSecondary onClick={ saveAndCompare } />,
+			br: <br />
+		}
+	),
+	'Your work will be published at the specified date and time.': createInterpolateElement(
+		altisRepublishStrings.scheduledCheck,
+		{
+			button: <Button isSecondary onClick={ saveAndCompare } />,
+			br: <br />
+		}
+	),
 };
 
 for ( const original in republishStrings ) {
