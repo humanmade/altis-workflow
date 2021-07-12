@@ -1,4 +1,6 @@
 /* global altisRepublishStrings */
+import React from 'react';
+
 import { Button } from '@wordpress/components';
 import { dispatch, select, subscribe } from '@wordpress/data';
 import { createInterpolateElement } from '@wordpress/element';
@@ -26,7 +28,7 @@ const saveAndCompare = () => {
 			altisRepublishStrings.checkLink, {
 				wasSavingPost,
 				wasSavingMetaboxes,
-				wasAutoSavingPost
+				wasAutoSavingPost,
 			}
 		);
 
@@ -34,7 +36,7 @@ const saveAndCompare = () => {
 		wasSavingMetaboxes = completed.isSavingMetaBoxes;
 		wasAutoSavingPost  = completed.isAutosavingPost;
 	} );
-}
+};
 
 /**
  * Redirects to url when saving in the block editor has completed.
@@ -62,7 +64,11 @@ const redirectOnSaveCompletion = ( url, editorState ) => {
 		redirectWithoutWarning( url );
 	}
 
-	return { isSavingPost, isSavingMetaBoxes, isAutosavingPost };
+	return {
+		isSavingPost,
+		isSavingMetaBoxes,
+		isAutosavingPost,
+	};
 };
 
 /**
@@ -77,7 +83,7 @@ const redirectOnSaveCompletion = ( url, editorState ) => {
  *
  * @returns {void}
  */
- const redirectWithoutWarning = ( url ) => {
+const redirectWithoutWarning = url => {
 	const currentPostStatus = select( 'core/editor' ).getCurrentPostAttribute( 'status' );
 	const editedPostStatus  = select( 'core/editor' ).getEditedPostAttribute( 'status' );
 
@@ -86,7 +92,7 @@ const redirectOnSaveCompletion = ( url, editorState ) => {
 	}
 
 	window.location.assign( url );
-}
+};
 
 /**
  * The strings to replace.
@@ -105,14 +111,14 @@ const republishStrings = {
 		altisRepublishStrings.changesMerged,
 		{
 			button: <Button isSecondary onClick={ saveAndCompare } />,
-			br: <br />
+			br: <br />,
 		}
 	),
 	'Your work will be published at the specified date and time.': createInterpolateElement(
 		altisRepublishStrings.scheduledCheck,
 		{
 			button: <Button isSecondary onClick={ saveAndCompare } />,
-			br: <br />
+			br: <br />,
 		}
 	),
 };
