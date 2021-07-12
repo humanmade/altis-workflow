@@ -42,9 +42,9 @@ const saveAndCompare = () => {
  * This is copy pasta of a function in duplicate-post/js/src/duplicate-post-functions.js. While this function is exported, using the exported function would require locking Duplicate Post to a specific version since the uncompiled files are not part of the package.
  *
  * @param {string} url         The url to redirect to.
- * @param {Object} editorState The current editor state regarding saving the post, metaboxes and autosaving.
+ * @param {object} editorState The current editor state regarding saving the post, metaboxes and autosaving.
  *
- * @returns {Object} The updated editor state.
+ * @returns {object} The updated editor state.
  */
 const redirectOnSaveCompletion = ( url, editorState ) => {
 	const isSavingPost       = select( 'core/editor' ).isSavingPost();
@@ -88,6 +88,9 @@ const redirectOnSaveCompletion = ( url, editorState ) => {
 	window.location.assign( url );
 }
 
+/**
+ * The strings to replace.
+ */
 const republishStrings = {
 	'Publish': altisRepublishStrings.publish,
 	'Publish:': altisRepublishStrings.publishColon,
@@ -114,6 +117,9 @@ const republishStrings = {
 	),
 };
 
+/**
+ * Loop through and replace strings.
+ */
 for ( const original in republishStrings ) {
 	setLocaleData( {
 		[ original ]: [
