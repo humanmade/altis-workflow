@@ -1,8 +1,8 @@
 /* global altisRepublishStrings */
-import { setLocaleData } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
 import { Button } from '@wordpress/components';
-import { dispatch, select, subscribe } from "@wordpress/data";
+import { dispatch, select, subscribe } from '@wordpress/data';
+import { createInterpolateElement } from '@wordpress/element';
+import { setLocaleData } from '@wordpress/i18n';
 
 /**
  * Saves the current post and redirects to the revision screen.
@@ -22,7 +22,13 @@ const saveAndCompare = () => {
 	 * @returns {void}
 	 */
 	subscribe( () => {
-		const completed = redirectOnSaveCompletion( altisRepublishStrings.checkLink, { wasSavingPost, wasSavingMetaboxes, wasAutoSavingPost } );
+		const completed = redirectOnSaveCompletion(
+			altisRepublishStrings.checkLink, {
+				wasSavingPost,
+				wasSavingMetaboxes,
+				wasAutoSavingPost
+			}
+		);
 
 		wasSavingPost      = completed.isSavingPost;
 		wasSavingMetaboxes = completed.isSavingMetaBoxes;
