@@ -257,7 +257,7 @@ function duplicate_post_row_actions( array $actions, WP_Post $post ) : array {
 			'<a href="%1$s" aria-label="%2$s">%3$s</a>',
 			$new_draft_link,
 			sprintf( __( 'Create a clone of %s', 'altis-workflow' ), $post->post_title ),
-			__( 'Clone', 'altis-workflow' ),
+			__( 'Clone', 'altis-workflow' )
 		);
 	}
 
