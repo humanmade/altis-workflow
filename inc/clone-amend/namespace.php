@@ -247,14 +247,28 @@ function duplicate_post_row_actions( array $actions, WP_Post $post ) : array {
 	// Remove the clone action.
 	unset( $actions['clone'] );
 
+	$linkify = new Link_Builder;
+	$new_draft_link = $linkify->build_new_draft_link( $post );
+	$amend_link = $linkify->build_rewrite_and_republish_link( $post );
+
 	// Rename the New Draft action to Clone.
 	if ( isset( $actions['edit_as_new_draft'] ) ) {
-		$actions['edit_as_new_draft'] = str_replace( __( 'New Draft', 'duplicate-post' ), __( 'Clone', 'altis-workflow' ), $actions['edit_as_new_draft'] );
+		$actions['edit_as_new_draft'] = sprintf(
+			'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+			$new_draft_link,
+			sprintf( __( 'Create a clone of %s', 'altis-workflow' ), $post->post_title ),
+			__( 'Clone', 'altis-workflow' ),
+		);
 	}
 
 	// Change Rewrite & Republish to Create Amendment.
 	if ( isset( $actions['rewrite'] ) ) {
-		$actions['rewrite'] = str_replace( __( 'Rewrite &amp; Republish', 'duplicate-post' ), __( 'Create Amendment', 'altis-workflow' ), $actions['rewrite'] );
+		$actions['rewrite'] = sprintf(
+			'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+			$amend_link,
+			sprintf( __( 'Create an amendment of %s', 'altis-workflow' ), $post->post_title ),
+			__( 'Create Amendment', 'altis-workflow' )
+		);
 	}
 
 	// Re-sort the actions.
