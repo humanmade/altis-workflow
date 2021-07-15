@@ -303,7 +303,14 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 
 	$original_post_edit_link = get_edit_post_link( $original_post->ID );
 
-	if ( isset( $post_states[0] ) && $post_states[0] === 'Customization Draft' ) {
+	/*
+	 * This is a draft state in WP Core that only shows up for us on cloned
+	 * posts. It's confusing to have multiple types of Drafts, so this should
+	 * just go back to Draft if it's set.
+	 *
+	 * @see wp-admin/includes/template.php:2187
+	 */
+	if ( isset( $post_states[0] ) && $post_states[0] === __( 'Customization Draft' ) ) {
 		$post_states[0] = __( 'Draft' );
 	}
 
