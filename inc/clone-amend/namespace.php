@@ -425,7 +425,7 @@ function replace_amended_post_notice() {
 	}
 
 	if ( $duplicated ) {
-		$text = _( 'An amendment of this post was created. Please note that any changes you make to this post will be replace when the amended version is published.', 'altis-workflow' );
+		$text = __( 'An amendment of this post was created. Please note that any changes you make to this post will be replace when the amended version is published.', 'altis-workflow' );
 		$status = 'warning';
 		$script = 'has_rewrite_and_republish_notice';
 	}
