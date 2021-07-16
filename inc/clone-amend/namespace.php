@@ -10,7 +10,6 @@
 namespace Altis\Workflow\Clone_Amend;
 
 use Altis;
-use Asset_Loader;
 use WP_Post;
 use Yoast\WP\Duplicate_Post\UI\Link_Builder;
 use Yoast\WP\Duplicate_Post\Utils;
@@ -330,63 +329,29 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
  * For rewrite & republished (amended) posts, we continue and replace all the strings provided by Duplicate Post with our versions.
  */
 function override_duplicate_post_strings() {
-	$post = get_post();
-	$asset_manifest = dirname( __FILE__, 3 ) . '/build/production-asset-manifest.json';
-	$dependencies = [ 'wp-components', 'wp-element', 'wp-i18n' ];
-	$handle = 'register-amend-post';
-	$linkify = new Link_Builder;
-	$new_draft_link = $linkify->build_new_draft_link( $post );
-	$amend_link = $linkify->build_rewrite_and_republish_link( $post );
-	$check_link = $linkify->build_check_link( $post );
-
 	$strings = [
-		'amendLink' => $amend_link,
-		'newDraftLink' => $new_draft_link,
-		'clonePost' => __( 'Clone post', 'altis-workflow' ),
-		'amendPost' => __( 'Create amendment', 'altis-workflow' ),
+		'Republish' => [ __( 'Publish Amendment', 'altis-workflow' ) ],
+		'Republish:' => [ __( 'Publish Amendment:', 'altis-workflow' ) ],
+		'Republish on:' => [ __( 'Publish Amendment on:', 'altis-workflow' ) ],
+		'Are you ready to republish your post?' => [ __( 'Are you ready to publish your amendment?', 'altis-workflow' ) ],
+		'Schedule republish' => [ __( 'Schedule amendment', 'altis-workflow' ) ],
+		'Schedule republish…' => [ __( 'Schedule amendment…', 'altis-workflow' ) ],
+		'Are you ready to schedule the republishing of your post?' => [ __( 'Are you ready to schedule publishing the amendments to your post?', 'altis-workflow' ) ],
+		', the rewritten post, is now scheduled to replace the original post. It will be published on' => [ __( ', the amended post, is now scheduled to replace the original post. It will be published on', 'altis-workflow' ) ],
+		'After republishing your changes will be merged into the original post and you\'ll be redirected there.<br /><br />Do you want to compare your changes with the original version before merging?<br /><br /><button>Save changes and compare</button>' => [ __( 'After clicking Publish Amendment, your changes will be merged into the original post and you\'ll be redirected there.<br /><br />Do you want to compare your changes with the original version before merging?<br /><br /><button>Save changes and compare</button>', 'altis-workflow' ) ],
+		'You\'re about to replace the original with this rewritten post at the specified date and time.<br /><br />Do you want to compare your changes with the original version before merging?<br /><br /><button>Save changes and compare</button>' => [ __( 'You\'re about to replace the original post with this amended post at the specified date and time.<br /><br />Do you want to compare your changes with the original version before publishing?<br /><br /><button>Save changes and compare</button>', 'altis-workflow' ) ],
+		'Copy to a new draft' => [ __( 'Clone post', 'altis-workflow' ) ],
+		'Rewrite & Republish' => [ __( 'Create amendment', 'altis-workflow' ) ],
 	];
 
-	Asset_Loader\enqueue_asset(
-		$asset_manifest,
-		'register-amend-post.js',
-		[
-			'handle' => $handle,
-			'dependencies' => $dependencies,
-		]
+	wp_add_inline_script(
+		'duplicate_post_edit_script',
+		sprintf(
+			'wp.i18n.setLocaleData( %s, \'duplicate-post\' );',
+			wp_json_encode( $strings )
+		),
+		'after'
 	);
-
-	wp_localize_script( $handle, 'altisAmendPost', $strings );
-
-	// If this isn't a rewritten/amended post, we're done now.
-	if ( ! get_post_meta( $post->ID, '_dp_is_rewrite_republish_copy', true ) ) {
-		return;
-	}
-
-	$strings = [
-		'publish' => __( 'Publish Amendment', 'altis-workflow' ),
-		'publishColon' => __( 'Publish Amendment:', 'altis-workflow' ),
-		'publishOn:' => __( 'Publish Amendment on:', 'altis-workflow' ),
-		'readyToPublish' => __( 'Are you ready to publish your amendment?', 'altis-workflow' ),
-		'schedule' => __( 'Schedule amendment', 'altis-workflow' ),
-		'scheduleEllipses' => __( 'Schedule amendment…', 'altis-workflow' ),
-		'readyToSchedule' => __( 'Are you ready to schedule publishing the amendments to your post?', 'altis-workflow' ),
-		'nowScheduled' => __( ', the amended post, is now scheduled to replace the original post. It will be published on', 'altis-workflow' ),
-		'changesMerged' => __( 'After clicking Publish Amendment, your changes will be merged into the original post and you\'ll be redirected there.<br /><br />Do you want to compare your changes with the original version before merging?<br /><br /><button>Save changes and compare</button>', 'altis-workflow' ),
-		'scheduledCheck' => __( 'You\'re about to replace the original post with this amended post at the specified date and time.<br /><br />Do you want to compare your changes with the original version before publishing?<br /><br /><button>Save changes and compare</button>', 'altis-workflow' ),
-		'checkLink' => $check_link,
-	];
-
-	$handle = 'altis-republish-strings';
-	Asset_Loader\enqueue_asset(
-		$asset_manifest,
-		'republish-strings.js',
-		[
-			'handle' => $handle,
-			'dependencies' => $dependencies,
-		]
-	);
-
-	wp_localize_script( $handle, 'altisRepublishStrings', $strings );
 }
 
 /**
