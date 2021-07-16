@@ -290,8 +290,15 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 		return $post_states;
 	}
 
-	if ( ! isset( $post_states['duplicate_post_original_item'] ) ) {
-		return $post_states;
+	/*
+	* This is a draft state in WP Core that only shows up for us on cloned
+	* posts. It's confusing to have multiple types of Drafts, so this should
+	* just go back to Draft if it's set.
+	*
+	* @see wp-admin/includes/template.php:2187
+	*/
+	if ( isset( $post_states[0] ) && $post_states[0] === __( 'Customization Draft' ) ) {
+		$post_states[0] = __( 'Draft' );
 	}
 
 	$is_amended_post = (bool) get_post_meta( $post->ID, '_dp_is_rewrite_republish_copy', true );
@@ -300,18 +307,11 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 		return $post_states;
 	}
 
-	$original_post_edit_link = get_edit_post_link( $original_post->ID );
-
-	/*
-	 * This is a draft state in WP Core that only shows up for us on cloned
-	 * posts. It's confusing to have multiple types of Drafts, so this should
-	 * just go back to Draft if it's set.
-	 *
-	 * @see wp-admin/includes/template.php:2187
-	 */
-	if ( isset( $post_states[0] ) && $post_states[0] === __( 'Customization Draft' ) ) {
-		$post_states[0] = __( 'Draft' );
+	if ( ! isset( $post_states['duplicate_post_original_item'] ) ) {
+		return $post_states;
 	}
+
+	$original_post_edit_link = get_edit_post_link( $original_post->ID );
 
 	$post_states['duplicate_post_original_item'] = sprintf(
 		__( 'Amendment of %s', 'altis-workflow' ),
