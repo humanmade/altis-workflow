@@ -301,12 +301,6 @@ function duplicate_post_override_post_states( $post_states, WP_Post $post ) {
 		$post_states[0] = __( 'Draft' );
 	}
 
-	$is_amended_post = (bool) get_post_meta( $post->ID, '_dp_is_rewrite_republish_copy', true );
-
-	if ( ! $is_amended_post ) {
-		return $post_states;
-	}
-
 	if ( ! isset( $post_states['duplicate_post_original_item'] ) ) {
 		return $post_states;
 	}
