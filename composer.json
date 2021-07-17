@@ -21,7 +21,8 @@
         ],
         "files": [
             "inc/namespace.php",
-            "inc/notifications/namespace.php"
+            "inc/notifications/namespace.php",
+            "inc/clone-amend/namespace.php"
         ]
     },
     "extra": {
