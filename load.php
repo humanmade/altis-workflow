@@ -23,7 +23,7 @@ add_action( 'altis.modules.init', function () {
 			'block-on-failing' => false,
 			'hide-column' => false,
 		],
-		'clone-republish' => [
+		'clone-amend' => [
 			'enabled' => true,
 			'post-types' => null,
 			'roles' => [
