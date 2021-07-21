@@ -366,6 +366,11 @@ function replace_duplicate_post_admin_menu() {
 		return;
 	}
 
+	// Don't show if the duplicate post menu item isn't present.
+	if ( empty( $wp_admin_bar->get_node( 'duplicate-post' ) ) ) {
+		return;
+	}
+
 	$post = get_post();
 
 	// Don't show the menu if we're not on a post page.
