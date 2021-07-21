@@ -64,7 +64,7 @@ When you are editing a post, the admin bar will be updated to include a Clone & 
 
 ## Enabled Post Types
 
-The post cloning and post amendments features are enabled for all public post types by default. You can modify this behavior by passing the post types you want to enable these features on to the `altis.modules.workflow.clone-republish.post-types` configuration option.
+The post cloning and post amendments features are enabled for all public post types by default. You can modify this behavior by passing the post types you want to enable these features on to the `altis.modules.workflow.clone-amend.post-types` configuration option.
 
 ```json
 {
@@ -72,7 +72,7 @@ The post cloning and post amendments features are enabled for all public post ty
 		"altis": {
 			"modules": {
 				"workflow": {
-					"clone-republish": {
+					"clone-amend": {
 						"post-types": [ "page", "product" ]
 					}
 				}
@@ -94,7 +94,7 @@ By default, the only roles able to use any of the Clone & Amend actions are site
 		"altis": {
 			"modules": {
 				"workflow": {
-					"clone-republish": {
+					"clone-amend": {
 						"roles": [ "author", "editor", "administrator" ]
 					}
 				}
@@ -116,7 +116,7 @@ Specific taxonomies can be excluded from posts that are duplicated. This applies
 		"altis": {
 			"modules": {
 				"workflow": {
-					"clone-republish": {
+					"clone-amend": {
 						"excluded-taxonomies": [ "categories", "tags" ]
 					}
 				}
