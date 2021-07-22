@@ -4,6 +4,14 @@
 
 Workflows provides teams with the flexibility to automate common tasks, enforcing quality standards and communicating more effectively by integrating notifications and actions with existing tools.
 
+## Clone & Amend
+
+Altis makes it possible to easily clone existing posts allowing for easy creation of similar pages. You can make template pages or posts stored as drafts, clone them, edit and publish.
+
+It's a common requirement to be able to make modifications to content that is already published. WordPress does not support this out of the box but in Altis you can create amendments, work on them for as long as you need and only publish the changes when you are ready to.
+
+[Read more abut post cloning and making amendments here.](./clone-and-amend.md)
+
 ## Notifications
 
 Notifications fill in the gaps between events happening and informing those who need to take any subsequent actions. [Find out more about how to create custom notifications and integrations](notifications.md).
