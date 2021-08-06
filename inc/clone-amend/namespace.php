@@ -361,11 +361,6 @@ function replace_duplicate_post_admin_menu() {
 		return;
 	}
 
-	// Don't show the options outside of the admin.
-	if ( ! is_admin() ) {
-		return;
-	}
-
 	// Don't show if the duplicate post menu item isn't present.
 	if ( empty( $wp_admin_bar->get_node( 'duplicate-post' ) ) ) {
 		return;
