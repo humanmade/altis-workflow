@@ -1,11 +1,11 @@
-# Publication Checklist
+https://github.com/humanmade/altis-accelerate/pull/51 # Publication Checklist
 
 Publication Checklist provides a framework for building out prepublish checks, with flexibility to fit your workflows.
 
 
 ## Enabling
 
-This feature is enabled by default, but has no visual effect until you create checks.
+This feature is enabled by default, and some features of Altis such as [Experience Blocks](docs://analytics/native/experience-blocks.md) may add custom checks.
 
 The feature can be disabled entirely by setting the `modules.workflow.publication-checklist` option to `false`:
 
