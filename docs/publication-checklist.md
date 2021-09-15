@@ -1,4 +1,4 @@
-https://github.com/humanmade/altis-accelerate/pull/51 # Publication Checklist
+# Publication Checklist
 
 Publication Checklist provides a framework for building out prepublish checks, with flexibility to fit your workflows.
 
