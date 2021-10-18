@@ -33,5 +33,8 @@ add_action( 'altis.modules.init', function () {
 			'excluded-taxonomies' => null,
 		],
 	];
-	Altis\register_module( 'workflow', __DIR__, 'Workflow', $default_settings, __NAMESPACE__ . '\\bootstrap' );
+	$options = [
+		'defaults' => $default_settings,
+	];
+	Altis\register_module( 'workflow', __DIR__, 'Workflow', $options, __NAMESPACE__ . '\\bootstrap' );
 } );
