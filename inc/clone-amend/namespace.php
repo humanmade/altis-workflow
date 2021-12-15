@@ -417,6 +417,10 @@ function replace_amended_post_notice() {
 	$rewriting = ! empty( $_REQUEST['rewriting'] ); // phpcs:ignore WordPress.Security.NonceVerification
 	$republished = ! empty( $_REQUEST['dprepublished'] ); // phpcs:ignore WordPress.Security.NonceVerification
 	$post = get_post();
+	if ( empty( $post ) ) {
+		return;
+	}
+
 	$duplicated = ! empty( get_post_meta( $post->ID, '_dp_has_rewrite_republish_copy', true ) );
 
 	// Bail if not rewriting/amending a post.
