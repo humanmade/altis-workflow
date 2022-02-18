@@ -25,7 +25,6 @@ class QM_Output_Notifications extends QM_Output_Html {
 	public function __construct( QM_Collector $collector ) {
 		parent::__construct( $collector );
 		add_filter( 'qm/output/menus', [ $this, 'admin_menu' ], 101 );
-		add_filter( 'qm/output/title', [ $this, 'admin_title' ], 101 );
 	}
 
 	/**
@@ -101,28 +100,6 @@ class QM_Output_Notifications extends QM_Output_Html {
 			</table>
 		</div>
 		<?php
-	}
-
-	/**
-	 * Adds data to top admin bar.
-	 *
-	 * @param array $title Array of title parts.
-	 * @return array
-	 */
-	public function admin_title( array $title ) : array {
-		$data = $this->collector->get_data();
-
-		if ( count( $data['notifications'] ) === 0 ) {
-			return $title;
-		}
-
-		$title[] = sprintf(
-			/* translators: the number of notifications */
-			_nx( '%d notification', '%d notifications', count( $data['notifications'] ), 'Workflow notifications', 'altis' ),
-			count( $data['notifications'] )
-		);
-
-		return $title;
 	}
 
 	/**
