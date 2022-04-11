@@ -389,7 +389,7 @@ function replace_duplicate_post_admin_menu() {
 	$wp_admin_bar->add_menu( [
 		'id'    => 'clone-amend',
 		'title' => '<span class="ab-label">' . $top_level_menu . '</span>',
-		'href'  => $linkify->build_new_draft_link( $post ),
+		'href'  => null,
 	] );
 
 	// Don't display an additional Clone Post menu item or a Create Amendment link if the post is an amendment.
