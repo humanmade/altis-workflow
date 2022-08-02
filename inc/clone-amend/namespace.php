@@ -57,7 +57,7 @@ function set_enabled_post_types( array $enabled_post_types ) : array {
 	$post_types = Altis\get_config()['modules']['workflow']['clone-amend']['post-types'] ?? null;
 
 	// If WooCommerce exsists, unset the post type Product.
-	if ( class_exists( 'woocommerce' ) ) {
+	if ( class_exists( 'WooCommerce' ) ) {
 		unset( $public_post_types['product'] );
 	}
 
