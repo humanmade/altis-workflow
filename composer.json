@@ -4,7 +4,7 @@
     "type": "package",
     "require": {
         "php": ">=7.1",
-        "humanmade/workflows": "~0.4.3",
+        "humanmade/workflows": "~0.4.6",
         "humanmade/publication-checklist": "~0.3.0",
         "yoast/duplicate-post": "~4.1.2"
     },
