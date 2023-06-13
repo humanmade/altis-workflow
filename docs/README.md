@@ -25,3 +25,8 @@ Notifications fill in the gaps between events happening and informing those who 
 Some common workflow scenarios including a publishing approval workflow are provided by default but you can disable them as necessary if your needs are more complex.
 
 [You can find more details about the default workflows here](built-in-notifications.md).
+
+
+## Publication Checklist
+
+Publication Checklist provides a framework for building out prepublish checks, with flexibility to fit your workflows. [Find out more about how to create custom publication checks here](publication-checklist.md).
