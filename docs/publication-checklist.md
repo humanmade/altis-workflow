@@ -1,6 +1,6 @@
 # Publication Checklist
 
-Publication Checklist provides a framework for building out prepublish checks, with flexibility to fit your workflows.
+Publication Checklist provides a framework for building pre-publish checks, with flexibility to fit your workflows.
 
 
 ## Enabling
