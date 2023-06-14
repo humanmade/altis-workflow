@@ -29,4 +29,4 @@ Some common workflow scenarios including a publishing approval workflow are prov
 
 ## Publication Checklist
 
-Publication Checklist provides a framework for building out prepublish checks, with flexibility to fit your workflows. [Find out more about how to create custom publication checks here](publication-checklist.md).
+Publication Checklist provides a framework for building pre-publish checks, with flexibility to fit your workflows. [Find out more about how to create custom publication checks here](publication-checklist.md).
