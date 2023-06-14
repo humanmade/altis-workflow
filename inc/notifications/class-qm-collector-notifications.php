@@ -27,6 +27,12 @@ class QM_Collector_Notifications extends QM_Collector {
 	public function process() {
 		$this->data['notifications'] = [];
 		$user_id = get_current_user_id();
+
+		if ( empty( $user_id ) ) {
+			// QM can be used when logged out with an authentication cookie.
+			return;
+		}
+
 		$notifications = get_user_meta( $user_id, 'hm.workflows.notification', false );
 		foreach ( $notifications as $notification_json ) {
 			$notification = json_decode( $notification_json, true );
